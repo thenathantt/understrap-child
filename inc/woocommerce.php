@@ -56,6 +56,21 @@ function finley_wc_sidebar(){
 }
 
 /**
+* Remove result count
+*/
+remove_action( 'woocommerce_before_shop_loop', 'woocommerce_result_count', 20 );
+
+/**
+* Add Off-Cavnas sidebar trigger
+*/
+
+add_action('woocommerce_before_shop_loop', 'finley_wc_sidebar_trigger', 15);
+
+function finley_wc_sidebar_trigger(){
+	echo '<button type="button" class="btn btn-primary finley-wc-sidebar-toggle">Filter</button>';
+}
+
+/**
 * SINGLE PRODUCT SPECIFIC
 */
 
