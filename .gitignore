@@ -13,3 +13,4 @@ dist-product
 npm-debug.log
 
 /vendor/
+sass/theme/.DS_Store
