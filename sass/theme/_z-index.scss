@@ -1,0 +1,20 @@
+$z-index: ()!default;
+
+$z-index: map-merge(
+	(
+		"navigation"				: 100,
+		"offcanvas"					: 200,
+		"mobile-level-one"	: 200,
+		"mobile-level-two"	: 250
+	),
+	$z-index
+);
+
+@function z-index($key) {
+  @if map-has-key($z-index, $key) {
+    @return map-get($z-index, $key);  
+  }
+   
+  @warn "The key #{$name} is not in the map ’$z-index";
+  @return null;
+};

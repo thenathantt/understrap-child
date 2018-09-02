@@ -1,0 +1,16 @@
+// Select2
+//
+// Custom Select2 Styles
+
+.select2-container {
+	
+	max-width: 100%;
+	font-size: var(--font-down-1);
+
+	.select2-selection {
+
+		border-radius: 0!important;
+
+	}
+
+}

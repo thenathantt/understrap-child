@@ -1,0 +1,58 @@
+li.product {
+
+	.variations_form {
+
+		&.cart {
+			
+			background-color: $pink-light;
+			padding-top: 0.5rem;
+			padding-bottom: 0.5rem;
+			margin: 0;
+
+		}
+
+		.variations {
+
+			.select_box_image {
+
+				display: flex;
+				justify-content: center;
+
+				.select_option_image {
+					
+					border: none;
+					margin: 0 0.3rem;
+
+					&.selected {
+						
+						.yith_wccl_value { border: 1px solid $gray-700; }
+
+					}
+
+					.yith_wccl_value {
+
+						height: 25px;
+						border-width: 1px;
+						border-radius: 50%;
+
+					}
+
+				}
+
+			}
+
+		}
+
+		&--single-product {
+
+			background: #000;
+
+			.yith_wccl_custom { display: inline-block!important; }
+
+			.select_box_image { display: none; }
+
+		}
+
+	}
+
+}

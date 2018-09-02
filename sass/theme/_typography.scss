@@ -1,0 +1,115 @@
+@font-face {
+  font-family: 'TiemposRegular';
+  font-weight: normal;
+  font-style: normal;
+  src: url('../fonts/TiemposHeadline-Regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'TiemposMedium';
+  font-weight: normal;
+  font-style: normal;
+  src: url('../fonts/TiemposHeadline-Medium.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'HKGroteskLight';
+  font-weight: normal;
+  font-style: normal;
+  src: url('../fonts/HKGrotesk-Light.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'HKGroteskLightItalic';
+  font-weight: normal;
+  font-style: normal;
+  src: url('../fonts/HKGrotesk-LightItalic.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'HKGroteskRegular';
+  font-weight: normal;
+  font-style: normal;
+  src: url('../fonts/HKGrotesk-Regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'HKGroteskRegularItalic';
+  font-weight: normal;
+  font-style: normal;
+  src: url('../fonts/HKGrotesk-Italic.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'HKGroteskSemiBold';
+  font-weight: normal;
+  font-style: normal;
+  src: url('../fonts/HKGrotesk-SemiBold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'HKGroteskBold';
+  font-weight: normal;
+  font-style: normal;
+  src: url('../fonts/HKGrotesk-Bold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'HKGroteskBoldItalic';
+  font-weight: normal;
+  font-style: normal;
+  src: url('../fonts/HKGrotesk-BoldItalic.woff') format('woff');
+}
+
+
+:root {
+	--font-up-6: 2.986rem;
+	--font-up-5: 2.488rem; 
+	--font-up-4: 2.074rem;
+  --font-up-3: 1.728rem;
+  --font-up-2: 1.440rem;
+  --font-up-1: 1.200rem;
+  --font-base: 1rem;
+  --font-down-1: 0.833rem;
+  --font-down-2: 0.694rem;
+  --font-down-3: 0.579rem;
+}
+
+html {
+	font-family: $font-family-sans-serif; 
+	font-size: 18px;
+	line-height: 1.35;
+}
+
+h1, .h1, 
+h2, .h2,
+h3, .h3,
+h4, .h4,
+h5, .h5,
+h6, .h6 { letter-spacing: 0.05rem; }
+
+// Default font sizes (overrides BS defaults)
+/* $h1-font-size:                $font-size-base * 2.5 !default;
+   $h2-font-size:                $font-size-base * 2 !default;
+   $h3-font-size:                $font-size-base * 1.75 !default;
+   $h4-font-size:                $font-size-base * 1.5 !default;
+   $h5-font-size:                $font-size-base * 1.25 !default;
+   $h6-font-size:                $font-size-base !default; */
+
+@include media-breakpoint-up(sm) {
+	h1, .h1 { font-size: 2.488rem; }
+	h2, .h2 { font-size: 2.074rem; }
+	h3, .h3 { font-size: 1.728rem; }
+	h4, .h4 { font-size: 1.440rem; }
+	h5, .h5 { font-size: 1.200rem; }
+	h6, .h6 { font-size: 0.833rem; }
+}
+
+@include media-breakpoint-up(md) {
+	h1, .h1 { font-size: 2.986rem; }
+	h2, .h2 { font-size: 2.488rem; }
+	h3, .h3 { font-size: 2.074rem; }
+	h4, .h4 { font-size: 1.728rem; }
+	h5, .h5 { font-size: 1.440rem; }
+	h6, .h6 { font-size: 1.200rem; }
+}
