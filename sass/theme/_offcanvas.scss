@@ -27,8 +27,6 @@
 		}
 	}
 
-	&--wc-sidebar, &--mini-cart { padding: 2em; }
-
 	&--mobile-top-nav { 
 		padding: 0; 
 		overflow: hidden;
@@ -37,13 +35,14 @@
 
 .fj-offcanvas-toggle{
 
-	&--wc-sidebar-x {
-	  position: absolute;
-	  right: 1rem;
-	  top: 1rem;
+	&--close {
+	  position: relative;
+	  margin-left: auto;
+	  padding: 0.5em;
 	  background: none;
 	  border: none;
 	  font-size: 1.5rem;
+	  line-height: 1;
 	  cursor: pointer;
 	}
 

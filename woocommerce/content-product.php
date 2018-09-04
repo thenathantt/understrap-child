@@ -35,7 +35,7 @@ if ( $product_per_row != 5 ) {
 $class = 'col-6 col-md-3 col-lg' . $columns;
 
 ?>
-<div <?php wc_product_class($class); ?>>
+<li <?php wc_product_class($class); ?>>
 	<?php
 	/**
 	 * Hook: woocommerce_before_shop_loop_item.
@@ -75,4 +75,4 @@ $class = 'col-6 col-md-3 col-lg' . $columns;
 	 */
 	do_action( 'woocommerce_after_shop_loop_item' );
 	?>
-</div>
+</li>

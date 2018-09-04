@@ -42,19 +42,21 @@ $container = get_theme_mod( 'understrap_container_type' );
 	
 		<div class="container px-0">
 			<nav id="topNav" class="fj-navbar navbar navbar-expand-md">
-		    <button class="fj-offcanvas-toggle d-md-none" type="button" data-toggle="hide" data-target=".fj-offcanvas-wrapper--mobile-top-nav">
-		    	<i class="material-icons">menu</i>
-		    </button>
+				<div class="fj-navbar-wrapper fj-navbar-wrapper--left">
+			    <button class="fj-offcanvas-toggle d-md-none px-0" type="button" data-toggle="hide" data-target=".fj-offcanvas-wrapper--mobile-top-nav">
+			    	<i class="material-icons">menu</i>
+			    </button>
+			  </div>
 		    <!-- Left Menu -->
 		    <?php if ( have_rows( 'left_menu', 'option' ) ) : ?>
-		    	<div class="fj-navbar-wrapper d-none d-md-flex">
+		    	<div class="fj-navbar-wrapper fj-navbar-wrapper--left d-none d-md-flex">
 		    		<ul class="nav navbar-nav flex-row">
 							<?php while ( have_rows( 'left_menu', 'option' ) ) : the_row(); ?>
 								<?php $link = get_sub_field( 'link' ); ?>
 								<?php if ( $link ) : ?>
 									<div class="<?php echo get_sub_field( 'has_megamenu' ) == 1 ? 'fj-has-megamenu' : '' ?>">
 										<li class="nav-item fj-nav-item">
-											<a class="d-block nav-link" href="<?php echo $link['url']; ?>" target="<?php echo $link['target']; ?>"><?php echo $link['title']; ?></a>
+											<a class="d-block nav-link hvr-underline-from-center" href="<?php echo $link['url']; ?>" target="<?php echo $link['target']; ?>"><?php echo $link['title']; ?></a>
 										</li>
 										<?php $columns = sizeof( get_sub_field( 'megamenu_columns' ) ); ?>
 										<?php if ( have_rows( 'megamenu_columns' ) ) : ?>
@@ -69,35 +71,37 @@ $container = get_theme_mod( 'understrap_container_type' );
 																else { $background = 'none'; }
 															?>
 															<div class="col" style="background: <?php echo $background; ?>">
-																<?php if ( have_rows( 'column_layout' ) ): ?>
-																	<?php while ( have_rows( 'column_layout' ) ) : the_row(); ?>
-																		<?php if ( get_row_layout() == 'menu_list' ) : ?>
-																			<!-- Mega Menu List -->
-																			<?php $list_heading = get_sub_field( 'list_heading' ); ?>
-																			<?php if ( $list_heading ) : ?>
-																				<span class="fj-megamenu__col-heading"><?php echo $list_heading; ?></span>
+																<div class="fj-megamenu__col">
+																	<?php if ( have_rows( 'column_layout' ) ): ?>
+																		<?php while ( have_rows( 'column_layout' ) ) : the_row(); ?>
+																			<?php if ( get_row_layout() == 'menu_list' ) : ?>
+																				<!-- Mega Menu List -->
+																				<?php $list_heading = get_sub_field( 'list_heading' ); ?>
+																				<?php if ( $list_heading ) : ?>
+																					<span class="fj-megamenu__col--heading"><?php echo $list_heading; ?></span>
+																				<?php endif; ?>
+																				<?php if ( have_rows( 'menu_links' ) ) : ?>
+																					<ul>
+																						<?php while ( have_rows( 'menu_links' ) ) : the_row(); ?>
+																							<?php $link = get_sub_field( 'link' ); ?>
+																							<?php if ( $link ) : ?>
+																								<li><a class="hvr-underline-from-center" href="<?php echo $link['url']; ?>" target="<?php echo $link['target']; ?>"><?php echo $link['title']; ?></a></li>
+																							<?php endif; ?>
+																						<?php endwhile; ?>
+																					</ul>
+																				<?php endif; ?>
+																			<?php elseif ( get_row_layout() == 'product_showcase' ) : ?>
+																				<!-- Mega Menu Feature -->
+																				<span style="color: <?php the_sub_field( 'heading_colour' ); ?>"><?php the_sub_field( 'heading' ); ?></span>
+																				<p style="color: <?php the_sub_field( 'content_colour' ); ?>"><?php the_sub_field( 'content' ); ?></p>
+																				<?php $button_link = get_sub_field( 'button_link' ); ?>
+																				<?php if ( $button_link ) : ?>
+																					<a href="<?php echo $button_link['url']; ?>" style="color: <?php the_sub_field( 'button_colour' ); ?>" target="<?php echo $button_link['target']; ?>" class="btn btn--secondary"><?php echo $button_link['title']; ?></a>
+																				<?php endif; ?>
 																			<?php endif; ?>
-																			<?php if ( have_rows( 'menu_links' ) ) : ?>
-																				<ul>
-																					<?php while ( have_rows( 'menu_links' ) ) : the_row(); ?>
-																						<?php $link = get_sub_field( 'link' ); ?>
-																						<?php if ( $link ) : ?>
-																							<li><a href="<?php echo $link['url']; ?>" target="<?php echo $link['target']; ?>"><?php echo $link['title']; ?></a></li>
-																						<?php endif; ?>
-																					<?php endwhile; ?>
-																				</ul>
-																			<?php endif; ?>
-																		<?php elseif ( get_row_layout() == 'product_showcase' ) : ?>
-																			<!-- Mega Menu Feature -->
-																			<span style="color: <?php the_sub_field( 'heading_colour' ); ?>"><?php the_sub_field( 'heading' ); ?></span>
-																			<p style="color: <?php the_sub_field( 'content_colour' ); ?>"><?php the_sub_field( 'content' ); ?></p>
-																			<?php $button_link = get_sub_field( 'button_link' ); ?>
-																			<?php if ( $button_link ) : ?>
-																				<a href="<?php echo $button_link['url']; ?>" style="color: <?php the_sub_field( 'button_colour' ); ?>" target="<?php echo $button_link['target']; ?>" class="btn btn--secondary"><?php echo $button_link['title']; ?></a>
-																			<?php endif; ?>
-																		<?php endif; ?>
-																	<?php endwhile; ?>
-																<?php endif;?>
+																		<?php endwhile; ?>
+																	<?php endif;?>
+																</div>
 															</div> <!-- .col -->
 														<?php endwhile; ?>
 													</div> <!-- .row -->
@@ -117,8 +121,8 @@ $container = get_theme_mod( 'understrap_container_type' );
 
 				<!-- Right Menu -->
 				<?php if ( have_rows( 'right_menu', 'option' ) ) : ?>
-					<div class="fj-navbar-wrapper d-flex">
-						<ul class="nav navbar-nav flex-row">
+					<div class="fj-navbar-wrapper fj-navbar-wrapper--right d-flex">
+						<ul class="nav navbar-nav flex-row align-items-center">
 							<?php while ( have_rows( 'right_menu', 'option' ) ) : the_row(); ?>
 								<?php $link = get_sub_field( 'link' ); $iconClass = get_sub_field( 'icon_class' ); ?>
 								<div class="<?php echo get_sub_field( 'has_dropdown' ) == 1 ? 'fj-has-megamenu' : ''; ?>">
@@ -131,14 +135,22 @@ $container = get_theme_mod( 'understrap_container_type' );
 									</li>
 									<?php if ( get_sub_field( 'has_dropdown' ) == 1 ) : ?>
 										<div class="fj-megamenu fj-megamenu--right text-center">
-											<?php the_sub_field( 'dropdown_content' ); ?>
+											<div class="container px-0">
+												<div class="row no-gutters h-100">
+													<div class="col">
+														<div class="fj-megamenu__col">
+															<?php the_sub_field( 'dropdown_content' ); ?>
+														</div>
+													</div>
+												</div>
+											</div>
 										</div>
 									<?php endif; ?>
 								</div>
 							<?php endwhile; ?>
 							<!-- Cart Toggle -->
-							<li class="nav-item">
-								<button type="button" class="d-flex btn btn-secondary fj-offcanvas-toggle" data-toggle="hide" data-target=".fj-offcanvas-wrapper--mini-cart">
+							<li class="nav-item fj-cart-toggle">
+								<button type="button" class="d-flex align-items-center btn fj-btn-pill btn-outline-primary fj-offcanvas-toggle" data-toggle="hide" data-target=".fj-offcanvas-wrapper--mini-cart">
 									<i class="material-icons d-inline-block pr-md-1">shopping_cart</i><span class='d-none d-md-inline'>View Cart</span>
 								</button>
 							</li>
@@ -147,7 +159,7 @@ $container = get_theme_mod( 'understrap_container_type' );
 				<?php endif; ?>
 
 		    <!-- Mini Cart -->
-				<div class="fj-offcanvas-wrapper fj-offcanvas-wrapper--right fj-offcanvas-wrapper--mini-cart hide">
+				<div class="fj-offcanvas-wrapper fj-offcanvas-wrapper--right fj-offcanvas-wrapper--mini-cart woocommerce hide">
 					<button class="fj-offcanvas-toggle fj-offcanvas-toggle--close fj-offcanvas-toggle--wc-sidebar-x" data-toggle="hide" data-target=".fj-offcanvas-wrapper--mini-cart" aria-label="close product filters">✕</button>
 					<?php woocommerce_mini_cart(); ?>
 				</div>
@@ -167,7 +179,7 @@ $container = get_theme_mod( 'understrap_container_type' );
 						<?php while ( have_rows( 'main_mobile_menu', 'option' ) ) : the_row(); ?>
 							<?php if ( have_rows( 'lists' ) ) : ?>
 								<!-- Level 1 -->
-								<div class="fj-mobile-nav__level-one">
+								<div class="fj-mobile-nav fj-mobile-nav__level-one">
 									<?php while ( have_rows( 'lists' ) ) : the_row(); ?>
 										<?php if ( have_rows( 'list_items' ) ) : ?>
 											<ul class="nav navbar-nav">										
@@ -176,7 +188,7 @@ $container = get_theme_mod( 'understrap_container_type' );
 													<?php if ( $item ) : ?>
 														<?php if ( get_sub_field( 'has_second_level_menu' ) == 1 ) : ?>
 															<li class="nav-item has-submenu">
-																<a class="nav-link fj-offcanvas-toggle" data-toggle="hide" data-target=".fj-mobile-nav__level-two--<?php echo strtolower( $item['title'] ); ?>"><?php echo $item['title']; ?></a>
+																<a class="nav-link fj-offcanvas-toggle" data-toggle="hide" data-target=".fj-mobile-nav__level-two--<?php echo strtolower( $item['title'] ); ?>"><?php echo $item['title']; ?><i class="material-icons">chevron_right</i></a>
 															</li>
 														<?php else : ?>
 															<li class="nav-item">
@@ -196,9 +208,10 @@ $container = get_theme_mod( 'understrap_container_type' );
 											<?php while ( have_rows( 'list_items' ) ) : the_row(); ?>
 												<?php $item = get_sub_field( 'item' ); ?>
 												<?php if ( get_sub_field( 'has_second_level_menu' ) == 1 ) : ?>
-													<div class="fj-mobile-nav__level-two fj-mobile-nav__level-two--<?php echo strtolower( $item['title']); ?> hide">
-														<div class="fj-mobile-nav__back fj-offcanvas-toggle" data-toggle="hide" data-target=".fj-mobile-nav__level-two--<?php echo strtolower( $item['title']); ?>">
-															<i class="fas fa-chevron-left"></i><span><?php echo $item['title']; ?></span>
+													<div class="fj-mobile-nav fj-mobile-nav__level-two fj-mobile-nav__level-two--<?php echo strtolower( $item['title']); ?> hide">
+														<div class="fj-mobile-nav__back fj-offcanvas-toggle d-flex align-items-center" data-toggle="hide" data-target=".fj-mobile-nav__level-two--<?php echo strtolower( $item['title']); ?>">
+															<i class="material-icons">arrow_back_ios</i>
+															<span><?php echo $item['title']; ?></span>
 														</div>
 														<?php if ( have_rows( 'lists' ) ) : ?>
 															<div class="mobile-menu__items">

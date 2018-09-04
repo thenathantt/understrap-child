@@ -16,6 +16,7 @@ function theme_enqueue_styles() {
 	// Get the theme data
 	$the_theme = wp_get_theme();
     wp_enqueue_style( 'google-fonts', 'https://fonts.googleapis.com/icon?family=Material+Icons', false ); 
+    wp_enqueue_style( 'hover_css', 'https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css', true );
     wp_enqueue_style( 'child-understrap-styles', get_stylesheet_directory_uri() . '/css/child-theme.css', array(), $the_theme->get( 'Version' ) );
     wp_enqueue_script( 'jquery');
 	wp_enqueue_script( 'popper-scripts', get_template_directory_uri() . '/js/popper.min.js', array(), false);
@@ -62,21 +63,4 @@ function wp_rocket__wp_get_attachment_image__lazyload( $attachment_id, $size = '
     }
     return $image_html;
 }
-
-//add the notice under the add to cart button on single product pages
-// add_action('woocommerce_single_product_summary', 'finley_after_add_to_cart_content', 50);
-// function finley_after_add_to_cart_content() {
-//     if(get_field('notice_under_add_to_cart')) {
-//         echo '<div class="product__notice">';
-//         the_field( 'notice_under_add_to_cart' );
-//         echo '</div>';
-//     }
-// }
-
-
-//add custom product meta data
-// add_action('woocommerce_after_single_product_summary', 'finley_custom_product_meta', 10);
-// function finley_custom_product_meta() {
-//     wc_get_template_part( 'content', 'custom-product-meta' );
-// }
 

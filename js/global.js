@@ -34,15 +34,7 @@ jQuery(document).ready(function($) {
     }
   });
 
-  // $('div.product [id=pa_ring-size]').find('option:nth-child(2)').prop('selected',true).trigger('change'); //trigger a change instead of click
-
-  //
-  //
-  //
-
-  $( document.body ).bind( 'wc_fragment_refresh updated_wc_div', function() {
-    refresh_cart_fragment();
-  });
+  $('li.product [id=pa_ring-size]').find('option:nth-child(2)').prop('selected',true).trigger('change'); //trigger a change instead of click
 
   //
   // Select2
@@ -68,16 +60,11 @@ jQuery(document).ready(function($) {
         'height' : 'auto'
       });
     }
-    
   });
 
   //
   //Slick
   //
-
-  $(window).on('orientationchange', function() {
-    $('.fj-related-products-wrapper').slick('resize');
-  });
 
   $('.fj-related-products-wrapper').slick({
     mobileFirst : true,

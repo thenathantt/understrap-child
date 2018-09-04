@@ -42,28 +42,43 @@ do_action( 'woocommerce_before_mini_cart' ); ?>
 						$product_permalink = apply_filters( 'woocommerce_cart_item_permalink', $_product->is_visible() ? $_product->get_permalink( $cart_item ) : '', $cart_item, $cart_item_key );
 						?>
 						<li class="woocommerce-mini-cart-item <?php echo esc_attr( apply_filters( 'woocommerce_mini_cart_item_class', 'mini_cart_item', $cart_item, $cart_item_key ) ); ?>">
-							<?php
-							echo apply_filters( 'woocommerce_cart_item_remove_link', sprintf(
-								'<a href="%s" class="remove remove_from_cart_button" aria-label="%s" data-product_id="%s" data-cart_item_key="%s" data-product_sku="%s">&times;</a>',
-								esc_url( wc_get_cart_remove_url( $cart_item_key ) ),
-								__( 'Remove this item', 'understrap' ),
-								esc_attr( $product_id ),
-								esc_attr( $cart_item_key ),
-								esc_attr( $_product->get_sku() )
-							), $cart_item_key );
-							?>
-							<?php if ( empty( $product_permalink ) ) : ?>
-								<?php echo $thumbnail . $product_name . '&nbsp;'; ?>
-							<?php else : ?>
-								<?php echo $thumbnail; ?>
-								<a href="<?php echo esc_url( $product_permalink ); ?>">
-									<?php echo apply_filters('woocommerce_widget_cart_product_title', $_product->get_name(), $_product );	?>
-								</a>
-							<?php endif; ?>
-							
-							<?php echo wc_get_formatted_cart_item_data( $cart_item ); ?>
-
-							<?php echo apply_filters( 'woocommerce_widget_cart_item_quantity', '<span class="quantity">' . sprintf( '%s &times; %s', $cart_item['quantity'], $product_price ) . '</span>', $cart_item, $cart_item_key ); ?>
+							<div class="container">
+								<div class="row align-items-center">
+									<?php if ( empty( $product_permalink ) ) : ?>
+										<?php echo $thumbnail . $product_name . '&nbsp;'; ?>
+									<?php else : ?>
+										<div class="col-3 px-0">
+											<?php echo $thumbnail; ?>
+										</div>
+										<div class="col-8 pr-2">
+											<a class="fj-product-title" href="<?php echo esc_url( $product_permalink ); ?>">
+												<?php 
+													echo apply_filters('woocommerce_widget_cart_product_title', $_product->get_name(), $_product );
+													echo apply_filters( 'woocommerce_widget_cart_item_quantity', '<span class="d-block quantity">' . sprintf( '%s &times; %s', $cart_item['quantity'], $product_price ) . '</span>', $cart_item, $cart_item_key );
+												?>
+											</a>
+										</div>
+									<?php endif; ?>
+									<div class="col-1 px-0">
+										<?php
+											echo apply_filters( 'woocommerce_cart_item_remove_link', sprintf(
+												'<a href="%s" class="remove remove_from_cart_button" aria-label="%s" data-product_id="%s" data-cart_item_key="%s" data-product_sku="%s">&times;</a>',
+												esc_url( wc_get_cart_remove_url( $cart_item_key ) ),
+												__( 'Remove this item', 'understrap' ),
+												esc_attr( $product_id ),
+												esc_attr( $cart_item_key ),
+												esc_attr( $_product->get_sku() )
+											), $cart_item_key );
+										?>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col">
+										<?php echo wc_get_formatted_cart_item_data( $cart_item ); ?>
+									</div>
+								</div>
+							</div>
+							<?php  ?>
 						</li>
 						<?php
 					}
@@ -73,15 +88,25 @@ do_action( 'woocommerce_before_mini_cart' ); ?>
 			?>
 		</ul>
 
-		<p class="woocommerce-mini-cart__total total"><strong><?php _e( 'Subtotal', 'understrap' ); ?>:</strong> <?php echo WC()->cart->get_cart_subtotal(); ?></p>
+		<div class="container px-0">
+			<div class="row no-gutters">
+				<div class="col">
+					<p class="woocommerce-mini-cart__total total"><strong><?php _e( 'Subtotal', 'understrap' ); ?>:</strong> <?php echo WC()->cart->get_cart_subtotal(); ?></p>
+				</div>
+			</div>
+		</div>
 
 		<?php do_action( 'woocommerce_widget_shopping_cart_before_buttons' ); ?>
 
-		<p class="woocommerce-mini-cart__buttons buttons"><?php do_action( 'woocommerce_widget_shopping_cart_buttons' ); ?></p>
+		<div class="container py-3">
+			<div class="row">
+				<?php do_action( 'woocommerce_widget_shopping_cart_buttons' ); ?>
+			</div>
+		</div>
 
 	<?php else : ?>
 
-		<p class="woocommerce-mini-cart__empty-message"><?php _e( 'No products in the cart.', 'understrap' ); ?></p>
+		<p class="px-3 woocommerce-mini-cart__empty-message"><?php _e( 'No products in the cart.', 'understrap' ); ?></p>
 
 	<?php endif; ?>
 

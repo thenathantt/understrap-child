@@ -443,6 +443,32 @@ function woo_remove_product_tabs( $tabs ) {
 }
 
 /**
+* CART WIDGET
+* Remove default buttons and insert new buttons with BS classes
+*/
+
+/**
+* Remove default buttons and insert new buttons with BS classes
+*/
+remove_action( 'woocommerce_widget_shopping_cart_buttons', 'woocommerce_widget_shopping_cart_button_view_cart', 10 );
+remove_action( 'woocommerce_widget_shopping_cart_buttons', 'woocommerce_widget_shopping_cart_proceed_to_checkout', 20 );
+
+add_action( 'woocommerce_widget_shopping_cart_buttons', 'fj_woocommerce_widget_shopping_cart_button_view_cart', 10 );
+add_action( 'woocommerce_widget_shopping_cart_buttons', 'fj_woocommerce_widget_shopping_cart_proceed_to_checkout', 20 );
+
+function fj_woocommerce_widget_shopping_cart_button_view_cart() {
+	echo '<div class="col-6 pr-1">';
+	echo '<a href="' . esc_url( wc_get_cart_url() ) . '" class="btn btn-block btn-outline-secondary wc-forward">' . esc_html__( 'View cart', 'woocommerce' ) . '</a>';
+	echo '</div>';
+}
+
+function fj_woocommerce_widget_shopping_cart_proceed_to_checkout() {
+	echo '<div class="col-6 pl-1">';
+	echo '<a href="' . esc_url( wc_get_checkout_url() ) . '" class="btn btn-block btn-primary checkout wc-forward">' . esc_html__( 'Checkout', 'woocommerce' ) . '</a>';
+	echo '</div>';
+}
+
+/**
 * CART SPECIFIC
 * 
 * Remove attributes from product title
@@ -501,3 +527,14 @@ function display_attribute_metal_type( $cart_item_data, $cart_item ){
 */
 
 remove_action( 'woocommerce_cart_collaterals', 'woocommerce_cross_sell_display');
+
+/**
+* CHECKOUT SPECIFIC
+* 
+* Uncheck Ship to Different Address
+*/
+
+/**
+* Uncheck Ship to Different Address
+*/
+add_filter( 'woocommerce_ship_to_different_address_checked', '__return_false' );

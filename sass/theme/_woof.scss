@@ -1,0 +1,29 @@
+.widget-woof {
+	
+	padding: 0 1em;
+
+	h4 {
+		font-size: var(--font-up-1);
+	}
+
+	ul.woof_list {
+
+		&_checkbox {
+
+			padding: 0;
+
+			li {
+				
+				label.woof_checkbox_label {
+
+					margin-bottom: 0;
+
+				}
+
+			}
+
+		}
+
+	}
+
+}

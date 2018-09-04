@@ -1,4 +1,37 @@
-li.product {
+//
+// YITH Wishlist
+//
+
+.yith-wcwl-add-to-wishlist {
+
+	.yith-wcwl-add-button {
+
+	}
+
+}
+
+//
+// YITH Waitlist
+//
+
+#yith-wcwtl-output {
+
+	.button { float: none; }
+
+}
+
+//
+// YITH Color Swatches;
+//
+
+.slick-slider {
+
+	.variations_form { opacity: 1!important; }
+
+}
+
+
+.product {
 
 	.variations_form {
 
@@ -7,11 +40,17 @@ li.product {
 			background-color: $pink-light;
 			padding-top: 0.5rem;
 			padding-bottom: 0.5rem;
-			margin: 0;
+			margin: 0!important;
 
 		}
 
 		.variations {
+
+			&.pa_color { 
+
+				.select2 { display: none; }
+
+			}
 
 			.select_box_image {
 
@@ -43,13 +82,17 @@ li.product {
 
 		}
 
-		&--single-product {
+	}
 
-			background: #000;
+}
 
-			.yith_wccl_custom { display: inline-block!important; }
+.fj-summary-wrapper {
 
-			.select_box_image { display: none; }
+	.variations_form {
+
+		.select_box_image {
+
+			display: none!important;
 
 		}
 
