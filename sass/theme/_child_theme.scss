@@ -3,3 +3,38 @@ div#content {
 	padding-bottom: 3em;
 
 }
+
+.fj-bg-box {
+	& > div:first-child {
+		&:before {
+			content: '';
+			right: 1em;
+			width: calc(100% - 2em);
+			height: 100%;
+			background: $pink-light;
+			position: absolute;
+		}
+	}
+}
+
+$fj-breakpoints: d, t, m;
+
+%object-fit-cover { object-fit: cover; }
+
+@each $bp in $fj-breakpoints {
+	@for $i from 1 through 100 {
+		.fj-fih-#{$bp}-#{$i} {
+			& img {
+				@extend %object-fit-cover;
+				height: #{$i}vw!important;
+				max-height: 500px;
+			}
+		}
+	}	
+}
+
+.fj-fih { 
+	& img {
+		height: auto!important; 
+	}
+}

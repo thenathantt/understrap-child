@@ -1,5 +1,100 @@
 jQuery(document).ready(function($) {
 
+  
+  // Hide Header on on scroll down
+  var didScroll;
+  var lastScrollTop = 0;
+  var delta = 0;
+  var navbar = $('#wrapper-navbar');
+  var navbarHeight = navbar.outerHeight();
+  var announcement = $('.fj-announcement');
+  var announcementHeight = $('.fj-announcement').outerHeight();
+
+  navbar.css({
+    'top' : -Math.abs(navbarHeight),
+    'margin-bottom' : -Math.abs(navbarHeight)
+  });
+  navbar.next().css('margin-top', navbarHeight);
+
+  $(window).scroll(function(event){
+      didScroll = true;
+  });
+
+  setInterval(function() {
+      if (didScroll) {
+          hasScrolled();
+          didScroll = false;
+      }
+  }, 250);
+
+  function hasScrolled() {
+    var st = $(this).scrollTop();
+    
+    // Make sure they scroll more than delta
+    if(Math.abs(lastScrollTop - st) <= delta){
+      return;
+    }
+
+    if ( $( window ).width() >= 768 ) {
+      // If they are at the very top of the page
+      if ( st === 0 ) {
+        setTimeout(function(){
+          if ( !navbar.hasClass('top') ) { navbar.addClass('top'); }
+          navbar.css('top', -Math.abs(navbarHeight));
+        }, 400);
+      }
+
+      // If they scrolled down and are past the navbar, change top position.
+      // This is necessary so you never see what is "behind" the navbar.
+      if (st > lastScrollTop && st > announcementHeight){
+        // Scroll Down
+        if ( navbar.hasClass('top') ) { navbar.removeClass('top'); }
+        navbar.css('top', -Math.abs(announcementHeight) );
+      }
+      else if (st < announcementHeight && !navbar.hasClass('top')) {
+        // Scroll up
+        navbar.css('top', '0' );
+      } 
+      else if ( !navbar.hasClass('top') ){
+        // Scroll Up
+        if(st + $(window).height() < $(document).height()) {
+            navbar.css('top', -Math.abs(announcementHeight) );
+        }
+      }
+      
+      lastScrollTop = st;
+    }
+    else if ( $( window ).width() < 768 ) {
+      // If they are at the very top of the page
+      if ( st === 0 ) {
+        setTimeout(function(){
+          if ( !navbar.hasClass('top') ) { navbar.addClass('top'); }
+          navbar.css('top', -Math.abs(navbarHeight));
+        }, 500);
+      }
+
+      // If they scrolled down and are past the navbar, change top position.
+      // This is necessary so you never see what is "behind" the navbar.
+      if (st > lastScrollTop && st > navbarHeight){
+        // Scroll Down
+        if ( navbar.hasClass('top') ) { navbar.removeClass('top'); }
+        navbar.css('top', -Math.abs(navbarHeight) );
+      }
+      else if (st < announcementHeight && !navbar.hasClass('top')) {
+        // Scroll up
+        navbar.css('top', '0' );
+      } 
+      else if ( !navbar.hasClass('top') ){
+        // Scroll Up
+        if(st + $(window).height() < $(document).height()) {
+            navbar.css('top', -Math.abs(announcementHeight) );
+        }
+      }
+      
+      lastScrollTop = st;
+    }
+  }
+
   $('.fj-offcanvas-toggle').on('click', function(){
     var toggleClass = $(this).attr('data-toggle');
     var targetClass = $(this).attr('data-target');
@@ -34,6 +129,63 @@ jQuery(document).ready(function($) {
     }
   });
 
+  $('.fj-toggle').on('click', function(){
+    var toggleClass = $(this).attr('data-toggle');
+    var targetClass = $(this).attr('data-target');
+    var targetClassCleaned = targetClass.replace(/\./g,'');
+
+    var currentPrimaryItem = $('.fj-quick-nav__item--primary.active');
+    var currentSecondaryMenu = $('.fj-quick-nav__level-two:not(.hide)');
+    var currentSecondaryMenuItems = $('.fj-quick-nav__level-two:not(.hide)').find('.fj-quick-nav__item');
+
+    var selectedPrimaryItem = $(this).parent();
+    var selectedSecondaryMenu = $(targetClass);
+    var selectedSecondaryMenuItems = $(targetClass).find(".fj-quick-nav__item");
+
+    var time = 0;
+    var interval = 50;
+
+    // Checks if the clicked primary menu item is already active
+    if ( selectedPrimaryItem.hasClass('active') ){
+      currentPrimaryItem.toggleClass('active');
+      currentSecondaryMenu.toggleClass(toggleClass);
+
+      currentSecondaryMenuItems.each(function(){
+        var currentItem = $(this);
+        setTimeout( function(){ currentItem.toggleClass(toggleClass); }, time);
+        time += interval;
+      });
+    } else if ( !selectedPrimaryItem.hasClass('active') && !currentPrimaryItem) {
+      selectedPrimaryItem.toggleClass('active');
+      selectedSecondaryMenu.toggleClass(toggleClass);
+
+      selectedSecondaryMenuItems.each(function(){
+        var selectedItem = $(this);
+        setTimeout( function(){ selectedItem.toggleClass(toggleClass); }, time);
+        time += interval;
+      });
+    } else {
+      currentPrimaryItem.toggleClass('active');
+      currentSecondaryMenu.toggleClass(toggleClass);
+
+      currentSecondaryMenuItems.each(function(){
+        var currentItem = $(this);
+        setTimeout( function(){ currentItem.toggleClass(toggleClass); }, time);
+        time += interval;
+      });
+
+      selectedPrimaryItem.toggleClass('active');
+      selectedSecondaryMenu.toggleClass(toggleClass);
+
+      selectedSecondaryMenuItems.each(function(){
+        var selectedItem = $(this);
+        setTimeout( function(){ selectedItem.toggleClass(toggleClass); }, time);
+        time += interval;
+      });
+    }
+  });
+
+  // pre-select size 3 to activate YTIH swatches in loop
   $('li.product [id=pa_ring-size]').find('option:nth-child(2)').prop('selected',true).trigger('change'); //trigger a change instead of click
 
   //
@@ -79,8 +231,7 @@ jQuery(document).ready(function($) {
         settings: {
           arrows: false,
           centerMode: true,
-          centerPadding: '50px',
-          slidesToShow: 3
+          slidesToShow: 2
         }
       },
       {
@@ -90,10 +241,39 @@ jQuery(document).ready(function($) {
     ]
   });
 
+  slickSlider = $('.fj-slick-products').slick({
+    // dots: true,
+    mobileFirst : true,
+    lazyLoad: 'progressive',
+    infinite: false,
+    slidesToShow: 1,
+    arrows: false,
+    centerPadding: '40px',
+    centerMode: true,
+    responsive: [
+      {
+        breakpoint: 576,
+        settings: {
+          slidesToShow: 2,
+          centerMode: false,
+          slidesToShow: 2.1
+        }
+      },
+      {
+        breakpoint: 992,
+        settings: "unslick"
+      }
+    ]
+  });
+
+  $(window).on('orientationchange', function() {
+    slickSlider.slick('resize');
+  });
+
 });
 
 AOS.init({
   offset: 80,
-  delay: 200,
-  easing: 'ease-in-out-quad',
+  delay: 150,
+  easing: 'ease-out',
 });

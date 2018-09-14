@@ -43,6 +43,13 @@ function understrap_woocommerce_wrapper_end() {
 	}
 }
 
+add_filter('woocommerce_style_smallscreen_breakpoint','woo_custom_breakpoint');
+
+function woo_custom_breakpoint($px) {
+  $px = '767px';
+  return $px;
+}
+
 add_filter( 'woocommerce_add_to_cart_fragments', function($fragments) {
 
     ob_start();

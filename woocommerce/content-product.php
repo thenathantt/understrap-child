@@ -24,15 +24,27 @@ if ( empty( $product ) || ! $product->is_visible() ) {
 	return;
 }
 
-$product_per_row = wc_get_loop_prop( 'columns' );
 $columns = '';
 
-if ( $product_per_row != 5 ) {
-	$num_of_col = 12/$product_per_row;
-	$columns = '-' . esc_attr($num_of_col);
+// Check if shortcode is using this page template
+if ( $fj_slick_products ) {
+	$product_per_row = $product_count;
+} elseif ( $fj_products ) {
+	$product_per_row = 1;
+} else {
+	$product_per_row = wc_get_loop_prop( 'columns' );
 }
 
-$class = 'col-6 col-md-3 col-lg' . $columns;
+$num_of_col = 12/$product_per_row;
+
+if ( $fj_products ) {
+	$columns = 'col-12';
+	$class = $columns;
+} elseif ( $product_per_row != 5 || $fj_slick_products) {
+	$num_of_col = 12/$product_per_row;
+	$columns = 'col-lg-' . esc_attr($num_of_col);
+	$class = 'col-6 col-md-6 ' . $columns;
+} 
 
 ?>
 <li <?php wc_product_class($class); ?>>

@@ -64,3 +64,133 @@ function wp_rocket__wp_get_attachment_image__lazyload( $attachment_id, $size = '
     return $image_html;
 }
 
+// strip string, replace spaces with dash (-)
+function fj_slug($string) {
+    //Lower case everything
+    $string = strtolower($string);
+    //Make alphanumeric (removes all other characters)
+    $string = preg_replace("/[^a-z0-9_\s-]/", "", $string);
+    //Clean up multiple dashes or whitespaces
+    $string = preg_replace("/[\s-]+/", " ", $string);
+    //Convert whitespaces and underscore to dash
+    $string = preg_replace("/[\s_]/", "-", $string);
+    return $string;
+}
+
+add_shortcode( 'fj_slick_products', 'fj_slick_products' );
+
+/**
+*
+* @param tag - product tag
+* @param productcount - the number of products to load
+*
+*/
+
+function fj_slick_products( $attributes, $content = null ) {
+    // Save each attribute's value to its own variable.
+    // This creates a variable $align with a value of 'left'.
+    extract( shortcode_atts( array(
+        'id' => '',
+        'tag' => '',
+        'product_count' => 3,
+    ), $attributes ) ); 
+
+    ob_start();
+
+    echo '<div class="woocommerce">';
+    echo '<div class="fj-products fj-loop-start products">';
+    echo '<div class="container px-0">';
+    echo '<div class="row">';
+
+    if ( $id == '' && $tag != '' ) {
+        $args = array(
+            'post_type' => 'product',
+            'posts_per_page' => $product_count,
+            'tax_query' => array(
+                array(
+                    'taxonomy' => 'product_tag',
+                    'terms' => $tag,
+                    'field' => 'slug',
+                    )
+                )
+            );
+        $the_query = new WP_Query( $args );
+
+        if ($the_query->have_posts()){
+            $fj_slick_products = true;
+
+            echo '<div class="fj-slick-products">';
+
+            while ($the_query->have_posts()){
+                $the_query->the_post();
+                include ( locate_template( array( "content-product.php", WC()->template_path() . "content-product.php" ) ) );
+            }
+            
+            echo '</div>'; 
+        } else {
+            echo 'No products found';
+        }
+    }
+    else if ( $id != '' && $tag == '' ) {
+        foreach ( $id as $id ) {
+            $fj_slick_products = true;
+
+            echo '<div class="fj-slick-products">';
+
+            $post_object = get_post( wc_get_product($id)->get_id() );
+            setup_postdata( $GLOBALS['post'] =& $post_object );
+            include ( locate_template( array( "content-product.php", WC()->template_path() . "content-product.php" ) ) );
+
+            echo '</div>';
+        }
+    } else {
+        echo 'No Products Found or ID and Tag both specified';
+    }
+
+    echo '</div>'; 
+    echo '</div>'; 
+    echo '</div>'; 
+    echo '</div>'; 
+
+    wp_reset_postdata();
+
+    return ob_get_clean();
+}
+
+add_shortcode( 'fj_products', 'fj_products' );
+
+/**
+*
+* @param tag - product tag
+* @param productcount - the number of products to load
+*
+*/
+
+function fj_products( $attributes, $content = null ) {
+    // Save each attribute's value to its own variable.
+    // This creates a variable $align with a value of 'left'.
+    extract( shortcode_atts( array(
+        'id' => ''
+    ), $attributes ) ); 
+    
+    ob_start();
+        $fj_products = true;
+
+        echo '<div class="woocommerce">';
+        echo '<div class="fj-products fj-products--lock-width fj-loop-start products">';
+        echo '<div class="container">';
+        echo '<div class="row">';
+
+        $post_object = get_post( wc_get_product($id)->get_id() );
+        setup_postdata( $GLOBALS['post'] =& $post_object );
+        include ( locate_template( array( "content-product.php", WC()->template_path() . "content-product.php" ) ) );
+        
+        echo '</div>';
+        echo '</div>';
+        echo '</div>';
+        echo '</div>';
+
+        wp_reset_postdata();
+
+    return ob_get_clean();
+}

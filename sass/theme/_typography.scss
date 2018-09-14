@@ -6,10 +6,24 @@
 }
 
 @font-face {
+  font-family: 'TiemposItalic';
+  font-weight: normal;
+  font-style: normal;
+  src: url('../fonts/TiemposHeadline-Italic.woff') format('woff');
+}
+
+@font-face {
   font-family: 'TiemposMedium';
   font-weight: normal;
   font-style: normal;
   src: url('../fonts/TiemposHeadline-Medium.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'TiemposMediumItalic';
+  font-weight: normal;
+  font-style: normal;
+  src: url('../fonts/TiemposHeadline-MediumItalic.woff') format('woff');
 }
 
 @font-face {
@@ -63,11 +77,11 @@
 
 
 :root {
-	--font-up-6: 2.986rem;
-	--font-up-5: 2.488rem; 
-	--font-up-4: 2.074rem;
-  --font-up-3: 1.728rem;
-  --font-up-2: 1.440rem;
+	--font-up-6: 2.488rem; 
+	--font-up-5: 2.074rem; 
+	--font-up-4: 1.728rem; 
+  --font-up-3: 1.440rem; 
+  --font-up-2: 1.200rem; 
   --font-up-1: 1.200rem;
   --font-base: 1rem;
   --font-down-1: 0.833rem;
@@ -86,7 +100,7 @@ h2, .h2,
 h3, .h3,
 h4, .h4,
 h5, .h5,
-h6, .h6 { letter-spacing: 0.05rem; }
+h6, .h6 { letter-spacing: 0.05rem; font-family: $headings-font-family; }
 
 // Default font sizes (overrides BS defaults)
 /* $h1-font-size:                $font-size-base * 2.5 !default;
@@ -97,19 +111,19 @@ h6, .h6 { letter-spacing: 0.05rem; }
    $h6-font-size:                $font-size-base !default; */
 
 @include media-breakpoint-up(sm) {
-	h1, .h1 { font-size: 2.488rem; }
-	h2, .h2 { font-size: 2.074rem; }
-	h3, .h3 { font-size: 1.728rem; }
-	h4, .h4 { font-size: 1.440rem; }
-	h5, .h5 { font-size: 1.200rem; }
+	h1, .h1 { font-size: 2.074rem; }
+	h2, .h2 { font-size: 1.728rem; }
+	h3, .h3 { font-size: 1.440rem; }
+	h4, .h4 { font-size: 1.200rem; }
+	h5, .h5 { font-size: 1.200rem; } 
 	h6, .h6 { font-size: 0.833rem; }
 }
 
 @include media-breakpoint-up(md) {
-	h1, .h1 { font-size: 2.986rem; }
-	h2, .h2 { font-size: 2.488rem; }
-	h3, .h3 { font-size: 2.074rem; }
-	h4, .h4 { font-size: 1.728rem; }
-	h5, .h5 { font-size: 1.440rem; }
+	h1, .h1 { font-size: 2.488rem; }
+	h2, .h2 { font-size: 2.074rem; }
+	h3, .h3 { font-size: 1.728rem; } 
+	h4, .h4 { font-size: 1.440rem; }
+	h5, .h5 { font-size: 1.200rem; }
 	h6, .h6 { font-size: 1.200rem; }
 }

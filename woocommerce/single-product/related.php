@@ -28,9 +28,9 @@ if ( $related_products ) : ?>
 				<div class="col-12 col-lg-3">
 					<h2 class="featured-products__heading"><?php _e('You might also like these…', 'woocommerce'); ?></h2>
 				</div>
-				<div class="col-12 col-lg-9 px-0 px-md-3">
+				<div class="col-12 col-lg-9 px-0 px-lg-3">
 					<?php woocommerce_product_loop_start(); ?>
-						<div class="fj-related-products-wrapper d-flex" style="max-width: 100%;">
+						<div class="fj-related-products-wrapper" style="max-width: 100%;">
 							<?php foreach ( $related_products as $related_product ) : ?>
 									<?php 
 										$post_object = get_post( $related_product->get_id() ); 

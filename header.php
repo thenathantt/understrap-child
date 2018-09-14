@@ -28,28 +28,171 @@ $container = get_theme_mod( 'understrap_container_type' );
 	<!-- ******************* Off-Canvas Overlay ******************* -->
 	<div class="fj-offcanvas-overlay"></div>
 
-	<!-- ******************* Announcement Bar ******************* -->
-	<?php if(get_field('bar_text','option')) : ?>
-		<div class="fj-announcement text-center" style="background-color: <?php the_field( 'bar_background_colour', 'option' ); ?>;color: <?php the_field( 'bar_text_colour', 'option' ); ?>">
-			<?php the_field( 'bar_text', 'option' ); ?>
+	  <!-- ******************* Mini Cart ******************* -->
+	<div class="fj-offcanvas-wrapper fj-offcanvas-wrapper--right fj-offcanvas-wrapper--mini-cart woocommerce hide">
+		<button class="fj-offcanvas-toggle fj-offcanvas-toggle--close fj-offcanvas-toggle--wc-sidebar-x" data-toggle="hide" data-target=".fj-offcanvas-wrapper--mini-cart" aria-label="close product filters">✕</button>
+		<?php woocommerce_mini_cart(); ?>
+	</div>
+
+	<!-- ******************* Mobile Menu ******************* -->
+  <div class="fj-offcanvas-wrapper fj-offcanvas-wrapper--left fj-offcanvas-wrapper--mobile-top-nav fj-mobile-nav hide">
+		<div class="fj-mobile-nav__user">
+			<?php if ( is_user_logged_in() ) : ?>
+				<?php global $current_user; wp_get_current_user(); ?>
+				<a href="<?php echo wc_get_page_permalink( 'myaccount' ); ?>" class="text--italic">Hey, <?php echo $current_user->display_name; ?></a>
+			<?php else : ?>
+				<a href="<?php echo wc_get_page_permalink( 'myaccount' ); ?>">Sign In</a>
+				<a href="<?php echo wc_get_page_permalink( 'myaccount' ); ?>">New? Register an account</a>
+			<?php endif; ?>
 		</div>
-	<?php endif; ?>		
+		<?php if ( have_rows( 'main_mobile_menu', 'option' ) ) : ?>
+			<?php while ( have_rows( 'main_mobile_menu', 'option' ) ) : the_row(); ?>
+				<?php if ( have_rows( 'lists' ) ) : ?>
+					<!-- Level 1 -->
+					<div class="fj-mobile-nav fj-mobile-nav__level-one">
+						<?php while ( have_rows( 'lists' ) ) : the_row(); ?>
+							<?php if ( have_rows( 'list_items' ) ) : ?>
+								<ul class="nav navbar-nav">										
+									<?php while ( have_rows( 'list_items' ) ) : the_row(); ?>
+										<?php $item = get_sub_field( 'item' ); ?>
+										<?php if ( $item ) : ?>
+											<?php if ( get_sub_field( 'has_second_level_menu' ) == 1 ) : ?>
+												<li class="nav-item has-submenu">
+													<a class="nav-link fj-offcanvas-toggle" data-toggle="hide" data-target=".fj-mobile-nav__level-two--<?php echo strtolower( $item['title'] ); ?>"><?php echo $item['title']; ?><i class="material-icons">chevron_right</i></a>
+												</li>
+											<?php else : ?>
+												<li class="nav-item">
+													<a class="nav-link" href="<?php echo $item['url']; ?>" target="<?php echo $item['target']; ?>"><?php echo $item['title']; ?></a>
+												</li>
+											<?php endif; ?>
+										<?php endif; ?>
+									<?php endwhile; ?>
+								</ul>
+							<?php endif; ?>
+						<?php endwhile; ?>
+					</div>
+					<!-- Level 2 -->
+					<?php if ( have_rows( 'lists' ) ) : ?>
+						<?php while ( have_rows( 'lists' ) ) : the_row(); ?>
+							<?php if ( have_rows( 'list_items' ) ) : ?>
+								<?php while ( have_rows( 'list_items' ) ) : the_row(); ?>
+									<?php $item = get_sub_field( 'item' ); ?>
+									<?php if ( get_sub_field( 'has_second_level_menu' ) == 1 ) : ?>
+										<div class="fj-mobile-nav fj-mobile-nav__level-two fj-mobile-nav__level-two--<?php echo strtolower( $item['title']); ?> hide">
+											<div class="fj-mobile-nav__back fj-offcanvas-toggle d-flex align-items-center" data-toggle="hide" data-target=".fj-mobile-nav__level-two--<?php echo strtolower( $item['title']); ?>">
+												<i class="material-icons">arrow_back_ios</i>
+												<span><?php echo $item['title']; ?></span>
+											</div>
+											<?php if ( have_rows( 'lists' ) ) : ?>
+												<div class="mobile-menu__items">
+													<?php while ( have_rows( 'lists' ) ) : the_row(); ?>
+														<ul class="nav navbar-nav">
+															<?php if ( have_rows( 'list_items' ) ) : ?>
+																<?php while ( have_rows( 'list_items' ) ) : the_row(); ?>
+																	<?php $item = get_sub_field( 'item' ); ?>
+																	<?php if ( $item ) { ?>
+																		<li class="nav-item">
+																			<a class="nav-link" href="<?php echo $item['url']; ?>"target="<?php echo $item['target']; ?>"><?php echo $item['title']; ?></a>
+																		</li>
+																	<?php } ?>
+																<?php endwhile; ?>
+															<?php endif; ?>
+														</ul>
+													<?php endwhile; ?>
+												</div>
+											<?php endif; ?>
+											</div>
+									<?php endif; ?>
+								<?php endwhile; ?>
+							<?php endif; ?>
+						<?php endwhile; ?>
+					<?php endif; ?>
+				<?php endif; ?>
+			<?php endwhile; ?>
+		<?php endif; ?>
+  </div>
+
+  <!-- ******************* Mobile Quick Nav ******************* -->
+  <?php if ( get_field('enable_bottom_menu', 'option') && have_rows( 'bottom_mobile_menu', 'option' ) ) : ?>
+		<section class="fj-quick-nav d-md-none">
+			<div class="fj-quick-nav__level-one">
+				<div class="container">
+					<div class="row">
+						<?php while ( have_rows( 'bottom_mobile_menu', 'option' ) ) : the_row(); ?>
+							<?php $link = get_sub_field( 'link' ); ?>
+							<?php if ( $link ) : ?>
+								<div class="col fj-quick-nav__item fj-quick-nav__item--primary fj-quick-nav__item--<?php echo fj_slug($link['title']); ?> d-flex flex-column justify-content-center">
+									<?php if ( get_sub_field( 'has_megamenu' ) == 1 ) { ?>
+										<div class="fj-toggle" data-toggle="hide" data-target=".fj-quick-nav__level-two--<?php echo fj_slug($link['title']); ?>">
+											<i class="material-icons"><?php the_sub_field( 'link_icon' ); ?></i>
+											<span class="d-block"><?php echo $link['title']; ?></span>
+										</div>
+									<?php } else { ?>
+										<a href="<?php echo $link['url']; ?>">
+											<i class="material-icons"><?php the_sub_field( 'link_icon' ); ?></i>
+											<span class="d-block"><?php echo $link['title']; ?></span>
+										</a>
+									<?php } ?>
+								<?php endif; ?>
+							</div>
+						<?php endwhile; ?>
+					</div>
+				</div>
+			</div>
+			<?php while ( have_rows( 'bottom_mobile_menu', 'option' ) ) : the_row(); ?>
+				<?php if ( get_sub_field( 'has_megamenu' ) == 1 ) : ?>
+					<?php $target_link = get_sub_field( 'link' ); ?>
+					<div class="fj-quick-nav__level-two fj-quick-nav__level-two--<?php echo fj_slug($target_link['title']); ?> hide">
+						<div class="container">
+							<?php if ( get_sub_field( 'megamenu_type' ) == 'small' ) : ?>
+								<?php while ( have_rows( 'link_list' ) ) : the_row() ?>
+									<?php $link = get_sub_field( 'link' ); ?>
+									<?php if ( $link ) : ?>
+										<div class="row my-2">
+											<div class="col fj-quick-nav__item fj-quick-nav__item--list hide">
+												<a href="<?php echo $link['url']; ?>" target="<?php echo $link['target']; ?>"><?php echo $link['title']; ?></a>
+											</div>
+										</div>
+									<?php endif; ?>
+								<?php endwhile; ?>
+							<?php elseif (get_sub_field( 'megamenu_type' ) == 'large') : ?>
+								<?php while ( have_rows( 'sections' ) ) : the_row(); ?>
+									<?php $link = get_sub_field( 'link' ); ?>
+									<?php if ( $link ) : ?>
+										<div class="col" style="background-image: url('<?php the_sub_field( 'background_image' ); ?>');">
+											<a class="d-flex align-items-end justify-content-center" href="<?php echo $link['url']; ?>" target="<?php echo $link['target']; ?>"><?php echo $link['title']; ?></a>
+										</div>
+									<?php endif; ?>
+								<?php endwhile; ?>
+							<?php endif; ?>
+						</div>
+					</div>
+				<?php endif; ?>
+			<?php endwhile; ?>
+		</section>
+	<?php endif; ?>
 
 	<!-- ******************* The Navbar Area ******************* -->
-	<div id="wrapper-navbar" itemscope itemtype="http://schema.org/WebSite">
+	<div id="wrapper-navbar" class="nav-down top" itemscope itemtype="http://schema.org/WebSite">
+		<!-- ******************* Announcement Bar ******************* -->
+		<?php if(get_field('bar_text','option')) : ?>
+			<div class="fj-announcement text-center" style="background-color: <?php the_field( 'bar_background_colour', 'option' ); ?>;color: <?php the_field( 'bar_text_colour', 'option' ); ?>">
+				<?php the_field( 'bar_text', 'option' ); ?>
+			</div>
+		<?php endif; ?>		
 
 		<a class="skip-link screen-reader-text sr-only" href="#content"><?php esc_html_e( 'Skip to content', 'understrap' ); ?></a>
 	
 		<div class="container px-0">
 			<nav id="topNav" class="fj-navbar navbar navbar-expand-md">
-				<div class="fj-navbar-wrapper fj-navbar-wrapper--left">
-			    <button class="fj-offcanvas-toggle d-md-none px-0" type="button" data-toggle="hide" data-target=".fj-offcanvas-wrapper--mobile-top-nav">
+				<div class="fj-navbar-wrapper fj-navbar-wrapper--toggle d-flex d-md-none">
+			    <div class="fj-offcanvas-toggle d-md-none px-0" data-toggle="hide" data-target=".fj-offcanvas-wrapper--mobile-top-nav">
 			    	<i class="material-icons">menu</i>
-			    </button>
+			    </div>
 			  </div>
 		    <!-- Left Menu -->
 		    <?php if ( have_rows( 'left_menu', 'option' ) ) : ?>
-		    	<div class="fj-navbar-wrapper fj-navbar-wrapper--left d-none d-md-flex">
+		    	<div class="fj-navbar-wrapper fj-navbar-wrapper--left-menu d-none d-md-flex">
 		    		<ul class="nav navbar-nav flex-row">
 							<?php while ( have_rows( 'left_menu', 'option' ) ) : the_row(); ?>
 								<?php $link = get_sub_field( 'link' ); ?>
@@ -92,12 +235,16 @@ $container = get_theme_mod( 'understrap_container_type' );
 																				<?php endif; ?>
 																			<?php elseif ( get_row_layout() == 'product_showcase' ) : ?>
 																				<!-- Mega Menu Feature -->
-																				<span style="color: <?php the_sub_field( 'heading_colour' ); ?>"><?php the_sub_field( 'heading' ); ?></span>
-																				<p style="color: <?php the_sub_field( 'content_colour' ); ?>"><?php the_sub_field( 'content' ); ?></p>
-																				<?php $button_link = get_sub_field( 'button_link' ); ?>
-																				<?php if ( $button_link ) : ?>
-																					<a href="<?php echo $button_link['url']; ?>" style="color: <?php the_sub_field( 'button_colour' ); ?>" target="<?php echo $button_link['target']; ?>" class="btn btn--secondary"><?php echo $button_link['title']; ?></a>
-																				<?php endif; ?>
+																				<div class="fj-megamenu__col--featured">
+																					<span class="fj-megamenu__heading"style="color: <?php the_sub_field( 'heading_colour' ); ?>"><?php the_sub_field( 'heading' ); ?></span>
+																					<p class="fj-megamenu__content"style="color: <?php the_sub_field( 'content_colour' ); ?>"><?php the_sub_field( 'content' ); ?></p>
+																					<?php $button_link = get_sub_field( 'button_link' ); ?>
+																					<?php if ( $button_link ) : ?>
+																						<div class="fj-megamenu__button-wrapper">
+																							<a href="<?php echo $button_link['url']; ?>" target="<?php echo $button_link['target']; ?>" class="btn btn-sm btn-outline-light"><?php echo $button_link['title']; ?></a>
+																						</div>
+																					<?php endif; ?>
+																				</div>
 																			<?php endif; ?>
 																		<?php endwhile; ?>
 																	<?php endif;?>
@@ -121,7 +268,7 @@ $container = get_theme_mod( 'understrap_container_type' );
 
 				<!-- Right Menu -->
 				<?php if ( have_rows( 'right_menu', 'option' ) ) : ?>
-					<div class="fj-navbar-wrapper fj-navbar-wrapper--right d-flex">
+					<div class="fj-navbar-wrapper fj-navbar-wrapper--right-menu d-flex">
 						<ul class="nav navbar-nav flex-row align-items-center">
 							<?php while ( have_rows( 'right_menu', 'option' ) ) : the_row(); ?>
 								<?php $link = get_sub_field( 'link' ); $iconClass = get_sub_field( 'icon_class' ); ?>
@@ -157,91 +304,6 @@ $container = get_theme_mod( 'understrap_container_type' );
 						</ul>
 					</div>
 				<?php endif; ?>
-
-		    <!-- Mini Cart -->
-				<div class="fj-offcanvas-wrapper fj-offcanvas-wrapper--right fj-offcanvas-wrapper--mini-cart woocommerce hide">
-					<button class="fj-offcanvas-toggle fj-offcanvas-toggle--close fj-offcanvas-toggle--wc-sidebar-x" data-toggle="hide" data-target=".fj-offcanvas-wrapper--mini-cart" aria-label="close product filters">✕</button>
-					<?php woocommerce_mini_cart(); ?>
-				</div>
-
-				<!-- Mobile Menu -->
-		    <div class="fj-offcanvas-wrapper fj-offcanvas-wrapper--left fj-offcanvas-wrapper--mobile-top-nav fj-mobile-nav hide">
-					<div class="fj-mobile-nav__user">
-						<?php if ( is_user_logged_in() ) : ?>
-							<?php global $current_user; wp_get_current_user(); ?>
-							<a href="<?php echo wc_get_page_permalink( 'myaccount' ); ?>" class="text--italic">Hey, <?php echo $current_user->display_name; ?></a>
-						<?php else : ?>
-							<a href="<?php echo wc_get_page_permalink( 'myaccount' ); ?>">Sign In</a>
-							<a href="<?php echo wc_get_page_permalink( 'myaccount' ); ?>">New? Register an account</a>
-						<?php endif; ?>
-					</div>
-					<?php if ( have_rows( 'main_mobile_menu', 'option' ) ) : ?>
-						<?php while ( have_rows( 'main_mobile_menu', 'option' ) ) : the_row(); ?>
-							<?php if ( have_rows( 'lists' ) ) : ?>
-								<!-- Level 1 -->
-								<div class="fj-mobile-nav fj-mobile-nav__level-one">
-									<?php while ( have_rows( 'lists' ) ) : the_row(); ?>
-										<?php if ( have_rows( 'list_items' ) ) : ?>
-											<ul class="nav navbar-nav">										
-												<?php while ( have_rows( 'list_items' ) ) : the_row(); ?>
-													<?php $item = get_sub_field( 'item' ); ?>
-													<?php if ( $item ) : ?>
-														<?php if ( get_sub_field( 'has_second_level_menu' ) == 1 ) : ?>
-															<li class="nav-item has-submenu">
-																<a class="nav-link fj-offcanvas-toggle" data-toggle="hide" data-target=".fj-mobile-nav__level-two--<?php echo strtolower( $item['title'] ); ?>"><?php echo $item['title']; ?><i class="material-icons">chevron_right</i></a>
-															</li>
-														<?php else : ?>
-															<li class="nav-item">
-																<a class="nav-link" href="<?php echo $item['url']; ?>" target="<?php echo $item['target']; ?>"><?php echo $item['title']; ?></a>
-															</li>
-														<?php endif; ?>
-													<?php endif; ?>
-												<?php endwhile; ?>
-											</ul>
-										<?php endif; ?>
-									<?php endwhile; ?>
-								</div>
-								<!-- Level 2 -->
-								<?php if ( have_rows( 'lists' ) ) : ?>
-									<?php while ( have_rows( 'lists' ) ) : the_row(); ?>
-										<?php if ( have_rows( 'list_items' ) ) : ?>
-											<?php while ( have_rows( 'list_items' ) ) : the_row(); ?>
-												<?php $item = get_sub_field( 'item' ); ?>
-												<?php if ( get_sub_field( 'has_second_level_menu' ) == 1 ) : ?>
-													<div class="fj-mobile-nav fj-mobile-nav__level-two fj-mobile-nav__level-two--<?php echo strtolower( $item['title']); ?> hide">
-														<div class="fj-mobile-nav__back fj-offcanvas-toggle d-flex align-items-center" data-toggle="hide" data-target=".fj-mobile-nav__level-two--<?php echo strtolower( $item['title']); ?>">
-															<i class="material-icons">arrow_back_ios</i>
-															<span><?php echo $item['title']; ?></span>
-														</div>
-														<?php if ( have_rows( 'lists' ) ) : ?>
-															<div class="mobile-menu__items">
-																<?php while ( have_rows( 'lists' ) ) : the_row(); ?>
-																	<ul class="nav navbar-nav">
-																		<?php if ( have_rows( 'list_items' ) ) : ?>
-																			<?php while ( have_rows( 'list_items' ) ) : the_row(); ?>
-																				<?php $item = get_sub_field( 'item' ); ?>
-																				<?php if ( $item ) { ?>
-																					<li class="nav-item">
-																						<a class="nav-link" href="<?php echo $item['url']; ?>"target="<?php echo $item['target']; ?>"><?php echo $item['title']; ?></a>
-																					</li>
-																				<?php } ?>
-																			<?php endwhile; ?>
-																		<?php endif; ?>
-																	</ul>
-																<?php endwhile; ?>
-															</div>
-														<?php endif; ?>
-														</div>
-												<?php endif; ?>
-											<?php endwhile; ?>
-										<?php endif; ?>
-									<?php endwhile; ?>
-								<?php endif; ?>
-							<?php endif; ?>
-						<?php endwhile; ?>
-					<?php endif; ?>
-		    </div>
-
 			</nav>
 		</div>
 
