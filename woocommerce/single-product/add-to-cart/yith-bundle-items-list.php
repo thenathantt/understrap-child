@@ -133,7 +133,7 @@ if ( $bundled_items ) {
                         if ( !$per_items_pricing ) {
                             ?>
                             <div class="price" data-default-del="<?php echo $my_price_max_html_data ?>" data-default-ins="">
-                                <span class="amount"><?php echo wc_price( $my_price_max ) ?></span>
+                                <span>(<span class="amount"><?php echo wc_price( $my_price_max ) ?></span> value)
                             </div>
                             <?php
                         } else {
@@ -195,68 +195,69 @@ if ( $bundled_items ) {
                                 <label><?php _e( 'Add', 'yith-woocommerce-product-bundles' ); ?></label>
                             </div>
                         <?php } ?>
-
-                        <table class="variations" cellspacing="0">
-                            <tbody>
-                            <?php $loop = 0;
-                            foreach ( $b_attributes as $name => $options ) : $loop++; ?>
-                                <tr>
-                                    <td class="label"><label
-                                                for="<?php echo sanitize_title( $name ); ?>"><?php echo wc_attribute_label( $name ); ?></label>
-                                    </td>
-
-                                    <td class="value"><select data-type="select" class="yith-wcpb-select-for-variables"
-                                                              id="<?php echo esc_attr( sanitize_title( $name ) ) . '_' . $bundled_item_id;; ?>"
-                                                              name="yith_bundle_attribute_<?php echo sanitize_title( $name ) . '_' . $bundled_item_id; ?>"
-                                                              data-attribute_name="attribute_<?php echo sanitize_title( $name ); ?>">
-                                            <option
+                        
+                        <div class="variations">
+                            <div class="container">
+                                <div class="row">
+                                    <?php $loop = 0;
+                                    foreach ( $b_attributes as $name => $options ) : $loop++; ?>
+                                        <div class="col label">
+                                            <label for="<?php echo sanitize_title( $name ); ?>"><?php echo wc_attribute_label( $name ); ?></label>
+                                        </div>
+                                        <div class="col value">
+                                            <select data-type="select" class="yith-wcpb-select-for-variables"
+                                                    id="<?php echo esc_attr( sanitize_title( $name ) ) . '_' . $bundled_item_id;; ?>"
+                                                    name="yith_bundle_attribute_<?php echo sanitize_title( $name ) . '_' . $bundled_item_id; ?>"
+                                                    data-attribute_name="attribute_<?php echo sanitize_title( $name ); ?>">
+                                                <option
                                                     value=""><?php echo __( 'Choose an option', 'woocommerce' ) ?>&hellip;
-                                            </option>
-                                            <?php
-                                            if ( is_array( $options ) ) {
-                                                if ( isset( $_REQUEST[ 'yith_bundle_attribute_' . sanitize_title( $name ) . '_' . $bundled_item_id ] ) ) {
-                                                    $selected_value = $_REQUEST[ 'yith_bundle_attribute_' . sanitize_title( $name ) . '_' . $bundled_item_id ];
-                                                } elseif ( isset( $selected_attributes[ $bundled_item_id ][ sanitize_title( $name ) ] ) ) {
-                                                    $selected_value = $selected_attributes[ $bundled_item_id ][ sanitize_title( $name ) ];
-                                                } else {
-                                                    $selected_value = '';
-                                                }
-
-                                                // Get terms if this is a taxonomy - ordered
-                                                if ( taxonomy_exists( $name ) ) {
-                                                    if ( !!$selected_value ) {
-                                                        $selected_value = YITH_WCPB()->compatibility->wpml->get_wpml_term_slug_current_language( $selected_value, $name );
+                                                </option>
+                                                <?php
+                                                if ( is_array( $options ) ) {
+                                                    if ( isset( $_REQUEST[ 'yith_bundle_attribute_' . sanitize_title( $name ) . '_' . $bundled_item_id ] ) ) {
+                                                        $selected_value = $_REQUEST[ 'yith_bundle_attribute_' . sanitize_title( $name ) . '_' . $bundled_item_id ];
+                                                    } elseif ( isset( $selected_attributes[ $bundled_item_id ][ sanitize_title( $name ) ] ) ) {
+                                                        $selected_value = $selected_attributes[ $bundled_item_id ][ sanitize_title( $name ) ];
+                                                    } else {
+                                                        $selected_value = '';
                                                     }
 
-                                                    $terms = wc_get_product_terms( $bundle_product_id, $name, array( 'fields' => 'all' ) );
-
-                                                    foreach ( $terms as $term ) {
-
-                                                        if ( !in_array( $term->slug, $options ) ) {
-                                                            continue;
+                                                    // Get terms if this is a taxonomy - ordered
+                                                    if ( taxonomy_exists( $name ) ) {
+                                                        if ( !!$selected_value ) {
+                                                            $selected_value = YITH_WCPB()->compatibility->wpml->get_wpml_term_slug_current_language( $selected_value, $name );
                                                         }
-                                                        echo '<option value="' . esc_attr( $term->slug ) . '" ' . selected( sanitize_title( $selected_value ), sanitize_title( $term->slug ), false ) . '>' . apply_filters( 'woocommerce_variation_option_name', $term->name ) . '</option>';
+
+                                                        $terms = wc_get_product_terms( $bundle_product_id, $name, array( 'fields' => 'all' ) );
+
+                                                        foreach ( $terms as $term ) {
+
+                                                            if ( !in_array( $term->slug, $options ) ) {
+                                                                continue;
+                                                            }
+                                                            echo '<option value="' . esc_attr( $term->slug ) . '" ' . selected( sanitize_title( $selected_value ), sanitize_title( $term->slug ), false ) . '>' . apply_filters( 'woocommerce_variation_option_name', $term->name ) . '</option>';
+
+                                                        }
+
+                                                    } else {
+                                                        foreach ( $options as $option ) {
+                                                            $selected = sanitize_title( $selected_value ) === $selected_value ? selected( $selected_value, sanitize_title( $option ), false ) : selected( $selected_value, $option, false );
+                                                            echo '<option value="' . esc_attr( $option ) . '" ' . $selected . '>' . esc_html( apply_filters( 'woocommerce_variation_option_name', $option ) ) . '</option>';
+                                                        }
 
                                                     }
-
-                                                } else {
-                                                    foreach ( $options as $option ) {
-                                                        $selected = sanitize_title( $selected_value ) === $selected_value ? selected( $selected_value, sanitize_title( $option ), false ) : selected( $selected_value, $option, false );
-                                                        echo '<option value="' . esc_attr( $option ) . '" ' . $selected . '>' . esc_html( apply_filters( 'woocommerce_variation_option_name', $option ) ) . '</option>';
-                                                    }
-
                                                 }
-                                            }
+                                                ?>
+                                            </select> <?php
+                                            // if ( sizeof( $b_attributes ) === $loop ) {
+                                            //     echo '<a class="reset_variations" href="#reset">' . esc_html__( 'Clear', 'woocommerce' ) . '</a>';
+                                            // }
                                             ?>
-                                        </select> <?php
-                                        if ( sizeof( $b_attributes ) === $loop ) {
-                                            echo '<a class="reset_variations" href="#reset">' . esc_html__( 'Clear', 'woocommerce' ) . '</a>';
-                                        }
-                                        ?></td>
-                                </tr>
-                            <?php endforeach; ?>
-                            </tbody>
-                        </table>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="single_variation_wrap bundled_item_wrap" style="display:none;">
                             <div class="single_variation bundled_item_cart_details"></div>
@@ -277,7 +278,6 @@ if ( $bundled_items ) {
                                 <?php } ?>
                             </div>
                             <?php do_action( 'yith_wcpb_after_bundled_item_quantity_input', $bundled_item, $min_qty, $max_qty ); ?>
-
 
                         </div>
 

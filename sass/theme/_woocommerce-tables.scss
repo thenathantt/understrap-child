@@ -26,6 +26,23 @@
 
   &.cart {
 
+    thead {
+      tr {
+        border-top: none;
+      }
+    }
+
+    tbody {
+      tr { 
+        border-top: 1px solid rgba(0,0,0,.1);    
+        &:first-child { border-top: none; }
+
+        @include media-breakpoint-up(md) {
+          &:first-child { border-top: 1px solid rgba(0,0,0,.1) }
+        }
+      }
+    }
+
     th {
     
       &.product-remove,
@@ -52,6 +69,7 @@
     }
 
     td {
+      border-top: none!important;
       
       &.product-remove { 
         flex: 0 0 100% 
@@ -83,11 +101,7 @@
 
         &:before { content: none!important; }
 
-        &.product-remove { 
-          flex: 0 0 6%; 
-          max-width: 6%;
-          border-top: 1px solid rgba(0,0,0,.1)!important;
-        }
+        &.product-remove { flex: 0 0 6%; max-width: 6%; }
 
         &.product-thumbnail { flex: 0 0 14%; max-width: 14%; }
 

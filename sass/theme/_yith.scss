@@ -1,4 +1,48 @@
 //
+// YITH Product Bundles
+//
+
+.woocommerce {
+	.product {
+		.fj-summary-wrapper {
+			.summary {
+				.yith-wcpb-bundle-form {
+					.price { 
+						display: inline;
+						.woocommerce-Price-amount {
+							font-family: $font-family-sans-serif;
+						}
+					}
+				}
+				.yith-wcpb-product-bundled-item-data__variations_form {
+					margin-top: 0.5em;
+					
+					@include media-breakpoint-up(md) {
+						max-width: 60%;
+						margin-left: auto;
+						margin-right: auto;
+					}
+				}
+			}
+		}
+	}
+}
+
+tr.yith-wcpb-child-of-bundle-table-item {
+	height: auto;
+	border-left: 2px solid $pink;
+	td.product-name {
+		a {
+			padding-left: 0;
+		}
+	}
+}
+
+.yith-wcpb-product-bundled-item-data__title {
+	font-size: 1rem;
+}
+
+//
 // YITH Wishlist
 //
 

@@ -27,7 +27,10 @@
 
 .woocommerce {
 
-  .woocommerce-Price-amount { color: $black; }
+  // .price {
+  //   del { color: $black; }
+  //   ins { text-docoration: none; }
+  // }
 
   /**
   * Product Loop
@@ -63,13 +66,6 @@
 
         font-size: var(--font-down-1);
         margin-bottom: 0;
-
-      }
-
-      .woocommerce-Price-amount {
-    
-        font-family: $font-family-sans-serif-bold;
-        font-size: var(--font-base);
 
       }
 
@@ -129,18 +125,26 @@
       .summary {
 
         .product_title,
-        .fj-woocommerce-loop-product__custom-attribute,
         .price,
-        .woocommerce-Price-amount,
-        .woocommerce-product-details__short-description,
+        .fj-woocommerce-loop-product__custom-attribute,
+        .woocommerce-product-details__short-description
         { 
           display: none; 
+        }
 
-          @include media-breakpoint-up(lg) {
+        @include media-breakpoint-up(lg) {
 
-            display: block;
-
+          .product_title,
+          .fj-woocommerce-loop-product__custom-attribute,
+          .woocommerce-product-details__short-description {
+            display: block;  
           }
+          
+          .price,
+          .woocommerce-Price-amount {
+            display: inline;
+          }
+
         }
       }
 
