@@ -39,10 +39,10 @@ $container = get_theme_mod( 'understrap_container_type' );
 		<div class="fj-mobile-nav__user">
 			<?php if ( is_user_logged_in() ) : ?>
 				<?php global $current_user; wp_get_current_user(); ?>
-				<a href="<?php echo wc_get_page_permalink( 'myaccount' ); ?>" class="text--italic">Hey, <?php echo $current_user->display_name; ?></a>
+				<a class="ml-auto" href="<?php echo wc_get_page_permalink( 'myaccount' ); ?>" class="text--italic">Hey, <?php echo $current_user->display_name; ?></a>
 			<?php else : ?>
-				<a href="<?php echo wc_get_page_permalink( 'myaccount' ); ?>">Sign In</a>
-				<a href="<?php echo wc_get_page_permalink( 'myaccount' ); ?>">New? Register an account</a>
+				<a class="mr-auto" href="<?php echo wc_get_page_permalink( 'myaccount' ); ?>">Sign In</a>
+				<a class="ml-auto" href="<?php echo wc_get_page_permalink( 'myaccount' ); ?>">New? Register an account</a>
 			<?php endif; ?>
 		</div>
 		<?php if ( have_rows( 'main_mobile_menu', 'option' ) ) : ?>

@@ -43,6 +43,81 @@ $container = get_theme_mod( 'understrap_container_type' );
 
 <?php wp_footer(); ?>
 
+<!-- Beacon -->
+<script type="text/javascript">!function(e,t,n){function a(){var e=t.getElementsByTagName("script")[0],n=t.createElement("script");n.type="text/javascript",n.async=!0,n.src="https://beacon-v2.helpscout.net",e.parentNode.insertBefore(n,e)}if(e.Beacon=n=function(t,n,a){e.Beacon.readyQueue.push({method:t,options:n,data:a})},n.readyQueue=[],"complete"===t.readyState)return a();e.attachEvent?e.attachEvent("onload",a):e.addEventListener("load",a,!1)}(window,document,window.Beacon||function(){});</script><script>window.Beacon('init', '8d388c85-1d24-4580-b74b-c5397adf343f')</script>
+<style>
+@media (max-width: 768px) {
+    #HSBeaconFabButton {
+      bottom: 10px!important;
+      right: 20px!important;
+    }
+    #HSBeaconFabButton.is-configDisplayLeft {
+      left: 20px!important;
+      right: initial!important;
+    }
+    
+    // new message
+    #BeaconWithResponsiveFrame {
+      bottom: 70px!important;
+      right: 12px!important;
+    }
+    #BeaconWithResponsiveFrame.is-configDisplayLeft {
+      left: 12px!important;
+      right: initial!important;
+    }
+
+    //chat open
+    #HSBeaconContainerFrame {
+      bottom: 80px!important;
+      right: 20px!important;
+    }
+    #HSBeaconContainerFrame.is-configDisplayLeft {
+      left: 20px!important;
+      right: initial!important;
+    }
+}
+
+@media (max-width: 576px) {
+    #HSBeaconFabButton {
+      right: 10px!important;
+    }
+    #HSBeaconFabButton.is-configDisplayRight {
+      left: initial!important;
+      right: 10px!important;
+    }
+    #HSBeaconFabButton.is-configDisplayLeft {
+      left: 10px!important;
+      right: initial!important;
+    }
+    
+    // new message
+    #BeaconWithResponsiveFrame {
+      bottom: 70px!important;
+      left: 0px!important;
+      right: 0px!important;
+      width: 100vw!important;
+    }
+    #BeaconWithResponsiveFrame.is-configDisplayLeft,
+    #BeaconWithResponsiveFrame.is-configDisplayRight {
+      left: 0!important;
+      right: 0!important;
+    }
+
+    // chat open
+    #HSBeaconContainerFrame {
+      bottom: 80px!important;
+      left: 0px!important;
+      right: 0px!important;
+      width: 100vw!important;
+    }
+    #HSBeaconContainerFrame.is-configDisplayLeft,
+    #HSBeaconContainerFrame.is-configDisplayRight {
+      left: 0!important;
+      right: 0!important;
+    }
+	}
+</style>
+
 </body>
 
 </html>

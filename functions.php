@@ -16,6 +16,7 @@ function theme_enqueue_styles() {
 	// Get the theme data
 	$the_theme = wp_get_theme();
     wp_enqueue_style( 'google-fonts', 'https://fonts.googleapis.com/icon?family=Material+Icons', false ); 
+    wp_enqueue_style('fj-font-awesome', 'https://use.fontawesome.com/releases/v5.3.1/css/all.css', true);
     wp_enqueue_style( 'hover_css', 'https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css', true );
     wp_enqueue_style( 'child-understrap-styles', get_stylesheet_directory_uri() . '/css/child-theme.css', array(), $the_theme->get( 'Version' ) );
     wp_enqueue_script( 'jquery');
@@ -101,6 +102,7 @@ function fj_slick_products( $attributes, $content = null ) {
     echo '<div class="fj-products fj-loop-start products">';
     echo '<div class="container px-0">';
     echo '<div class="row">';
+    echo '<div class="col">';
 
     if ( $id == '' && $tag != '' ) {
         $args = array(
@@ -147,6 +149,7 @@ function fj_slick_products( $attributes, $content = null ) {
         echo 'No Products Found or ID and Tag both specified';
     }
 
+    echo '</div>';
     echo '</div>'; 
     echo '</div>'; 
     echo '</div>'; 

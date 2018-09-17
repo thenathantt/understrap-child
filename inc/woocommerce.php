@@ -63,6 +63,43 @@ add_filter( 'woocommerce_add_to_cart_fragments', function($fragments) {
 
 } );
 
+add_shortcode('display_my_account_contents', 'my_account_contents_shortcode');
+
+function my_account_contents_shortcode() {
+
+	if(is_user_logged_in()) : ?>
+		<ul class="text-center">
+			<?php global $current_user; wp_get_current_user(); ?>
+			<li><h5 class="mt-0 mb-3">Hey, <?php echo $current_user->display_name; ?></h5></li>
+			<li><a class="hvr-underline-from-center" href="/my-account"><?php _e('Your Account', 'my_account_dropdown'); ?></a></li>
+			<li><a class="hvr-underline-from-center" href="/my-account/orders"><?php _e('Your Orders', 'my_account_dropdown'); ?></a></li>
+			<li><a class="hvr-underline-from-center" href="/my-account/gift-cards"><?php _e('Your Gift Cards', 'my_account_dropdown'); ?></a></li>
+			<li><a class="hvr-underline-from-center" href="/my-account/edit-address"><?php _e('Your Addresses', 'my_account_dropdown'); ?></a></li>
+			<li><a class="hvr-underline-from-center" href="<?php echo wp_logout_url(); ?>"><?php _e('Logout', 'my_account_dropdown'); ?></a></li>
+		</ul>
+	 <?php else : ?>
+	 	<h5 class="mt-0 mb-3">Login</h5>
+		<form name="loginform" id="loginform" class="loginform fj-loginform" action="<?php echo site_url( '/wp-login.php' ); ?>" method="post">
+			<p class="form-row">
+				<input id="user_login" type="text" placeholder="<?php _e('Username or email address', 'woocommerce'); ?>" value="" name="log">
+			</p>
+			<p class="form-row">
+				<input id="user_pass" type="password" value="" name="pwd" placeholder="<?php _e('Password', 'woocommerce'); ?>">
+			</p>
+
+			<p><input id="wp-submit" type="submit" value="<?php _e('Login', 'woocommerce'); ?>" name="wp-submit" class="btn btn-green"></p>
+
+			<input type="hidden" value="<?php echo site_url( '/my-account' ); ?>" name="redirect_to">
+			<input type="hidden" value="1" name="testcookie">
+		</form>
+		 <?php if ( shortcode_exists( 'yith_wc_social_login' ) ) {
+			echo do_shortcode( '[yith_wc_social_login]' ); 
+		 } ?> 
+		<a class="loginform__link" href="/my-account"><?php _e('Register', 'woocommerce'); ?></a>
+		<a class="loginform__link" href="<?php echo esc_url( wp_lostpassword_url() ); ?>"><?php esc_html_e( 'Lost your password?', 'woocommerce' ); ?></a>
+	<?php endif;
+}
+
 /**
 * SHOP LOOP / GENERAL
 *
