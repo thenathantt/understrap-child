@@ -5,8 +5,39 @@
 #loginform.fj-loginform {
   max-width: 80%;
   margin: 0 auto;
+
+  input {
+    width: 100%;
+    padding: 0.5em;
+  }
 }
 
+//
+// Metal Type Prompt
+//
+
+#wooccommerce-wrapper {
+  #content.container {
+    display: none;
+  }
+}
+
+.fj-metal-prompt {
+  &__col {
+    min-height: 35vh;
+
+    &--silver {
+      background: $pink-light;
+    }
+
+    &--gold {
+      background: $pink;
+    }
+  }
+}
+
+
+//
 // Contents
 //
 
@@ -14,7 +45,7 @@
   .entry-header { text-align: center; }
 }
 
-.woocommerce-wrapper {
+#woocommerce-wrapper {
 
   padding-bottom: 3em;
 
@@ -24,10 +55,6 @@
   padding: 1em 0!important;
   text-align: center;
   font-size: var(--font-down-1);
-
-  &--single-product {
-    background: $pink-light;
-  }
 
   .woocommerce-breadcrumb { margin-bottom: 0!important; }
 }
@@ -66,10 +93,12 @@
 
       .woocommerce-loop-product__title {
         
-        font-size: var(--font-base);
+        font-size: var(--font-down-1);
         margin-top: 0.5em;
     
       }
+
+      .woocommerce-Price-amount { font-size: var(--font-down-1); }
 
       .fj-woocommerce-loop-product__custom-attribute {
 
@@ -109,13 +138,8 @@
 
   .product {
 
-    .fj-product-wrapper {
-      background-color: $pink-light;
-    }
-
     .fj-summary-wrapper {
 
-      background: $pink-light;
       text-align: center;
       padding-bottom: 2.5em;
 
@@ -135,6 +159,7 @@
 
         .product_title,
         .price,
+        .custom-attributes,
         .fj-woocommerce-loop-product__custom-attribute,
         .woocommerce-product-details__short-description
         { 
@@ -185,6 +210,22 @@
 
     form.cart {
 
+      &.variations_form--single-product {
+        .variations {
+          .label {
+            width: 30%;
+            text-align: left;
+
+            label { 
+              margin-bottom: 0; 
+              line-height: 2em;
+              font-weight: 400;
+              font-size: 0.9rem;
+            }
+          }
+        }
+      }
+
       margin-bottom: 0.5em!important;
 
       .reset-variations__wrapper {
@@ -198,6 +239,12 @@
         float: none!important;
         vertical-align: top;
 
+      }
+
+      button.button {
+        float: none;
+        @extend .btn;
+        @extend .btn-primary;
       }
 
     }

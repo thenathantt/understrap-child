@@ -24,7 +24,7 @@ $container = get_theme_mod( 'understrap_container_type' );
 
 					<div class="site-info text-center">
 						<p class="mb-2">
-							<a href="/privacy-policy">Privacy Policy</a> | <a href="terms-conditions">Terms & Conditions</a>
+							<a href="/privacy-policy">Privacy Policy</a> | <a href="/terms-conditions">Terms & Conditions</a>
 						<p>
 						<span>&copy;<?php echo date("Y"); ?> Finley Design Studio Inc. </span>
 					</div><!-- .site-info -->

@@ -31,24 +31,25 @@ do_action( 'woocommerce_before_add_to_cart_form' ); ?>
 	<?php else : ?>
 		<div class="variations" cellspacing="0">
 			<div class="container">
-				<div class="row justify-content-center">
+				<div class="row no-gutters">
 					<?php foreach ( $attributes as $attribute_name => $options ) : ?>
-						<div class="col-6">
-							<div class="label">
-								<label for="<?php echo esc_attr( sanitize_title( $attribute_name ) ); ?>"><?php echo wc_attribute_label( $attribute_name ); // WPCS: XSS ok. ?></label>
-							</div>
-							<div class="value">
-								<?php
-									wc_dropdown_variation_attribute_options( array(
-										'options'   => $options,
-										'attribute' => $attribute_name,
-										'product'   => $product,
-									) );
-								?>
+						<div class="col-12 col-md-6 mb-3">
+							<div class="d-flex justify-content-between px-md-2">
+								<div class="label">
+									<label for="<?php echo esc_attr( sanitize_title( $attribute_name ) ); ?>"><?php echo wc_attribute_label( $attribute_name ); // WPCS: XSS ok. ?></label>
+								</div>
+								<div class="value flex-grow-1">
+									<?php
+										wc_dropdown_variation_attribute_options( array(
+											'options'   => $options,
+											'attribute' => $attribute_name,
+											'product'   => $product,
+										) );
+									?>
+								</div>
 							</div>
 						</div>
 						<?php if ( end( $attribute_keys ) === $attribute_name ) : ?>
-							<div class="w-100"></div>
 							<div class="col-12">
 								<div class="reset-variations__wrapper">
 									<?php echo wp_kses_post( apply_filters( 'woocommerce_reset_variations_link', '<a class="reset_variations reset-variations__link" href="#"><i class="material-icons reset-variations__icon">refresh</i>' . esc_html__( 'Clear Selection', 'woocommerce' ) . '</a>' ) ); ?>

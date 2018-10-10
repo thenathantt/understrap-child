@@ -1,4 +1,5 @@
 <?php
+
 /**
 * Understrap already unhooks woocommerce wrappers and adds its own but here we add 
 * different wrappers if we are on a single product page
@@ -14,6 +15,7 @@ remove_action( 'woocommerce_after_main_content', 'woocommerce_output_content_wra
 * Then hook in your own functions to display the wrappers your theme requires
 */
 add_action('woocommerce_before_main_content', 'understrap_woocommerce_wrapper_start', 10);
+// add_action( 'woocommerce_before_main_content',  'fj_metal_type_prompt', 10);
 add_action('woocommerce_after_main_content', 'understrap_woocommerce_wrapper_end', 10);
 
 function understrap_woocommerce_wrapper_start() {
@@ -104,6 +106,7 @@ function my_account_contents_shortcode() {
 * SHOP LOOP / GENERAL
 *
 * Add wrappers conditional classes for breadcrumbs
+* Add metal type toggle
 * Add custom sidebar to WooCommerce Product Archives
 * Remove result count
 * Add Off-Cavnas sidebar trigger
@@ -116,6 +119,15 @@ function my_account_contents_shortcode() {
 * Display currency after price
 * Change number of related products output
 */
+
+add_filter('woof_get_request_data', 'my_woof_get_request_data');
+ 
+function my_woof_get_request_data($request)
+{
+    $request['pa_metal-type'] = '925-sterling-silver';
+    return $request;
+}
+
 
 /**
 * Add wrappers conditional classes for breadcrumbs
@@ -139,6 +151,16 @@ add_action( 'woocommerce_before_main_content', 'fj_woocommerce_breadcrumb_wrappe
 
 function fj_woocommerce_breadcrumb_wrapper_close(){
 	echo '</div>';
+}
+
+/**
+* Add metal type toggle
+*/
+
+add_action( 'woocommerce_archive_description', 'fj_metal_type_toggle', 15 );
+ 
+function fj_metal_type_toggle() {
+	wc_get_template_part( 'content', 'metal-type-toggle' );
 }
 
 /**
@@ -270,7 +292,8 @@ add_filter( 'woocommerce_output_related_products_args', 'fj_related_products_arg
 
 /**
 * SINGLE PRODUCT SPECIFIC
-*
+* 
+* Change dropdown text
 * Copy title, rating, price and excerpt above image for mobile and add wrappers
 * Add wrappers around product images
 * Add wrappers to single product summary
@@ -283,6 +306,17 @@ add_filter( 'woocommerce_output_related_products_args', 'fj_related_products_arg
 * Remove product meta
 * Remove product data tabs
 */
+
+
+/**
+* Chnage dropdown text
+*/
+
+add_filter( 'woocommerce_dropdown_variation_attribute_options_args', 'fj_wc_filter_dropdown_args', 10 );
+function fj_wc_filter_dropdown_args( $args ) {
+    $args['show_option_none'] = 'Select...';
+    return $args;
+}
 
 /**
 * Add wrappers around product images and summary

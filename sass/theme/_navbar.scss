@@ -28,6 +28,10 @@
   transition: all 0.35s;
 
   &.top { position: static; }
+
+  .container {
+    max-width: 1920px;
+  }
 }
 
 .fj-navbar-wrapper {
@@ -214,6 +218,12 @@
 
     &:only-child {
       width: 350px;
+    }
+
+    &--shop-all-btn { 
+      min-height: unset;
+      min-width: unset;
+      padding: unset;
     }
   }
 

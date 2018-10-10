@@ -21,7 +21,6 @@
     flex-flow: row wrap;
   }
 
-
   // Cart table styles
 
   &.cart {
@@ -153,12 +152,19 @@
       }
     }
   }
+}
 
-  //
-  // Checkout order review table
-  //
+//
+// Checkout order review table
+//
 
-  &.woocommerce-checkout-review-order-table {
+#order_review {
+
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+
+  .shop_table {
 
     th {
 

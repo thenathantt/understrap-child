@@ -86,14 +86,14 @@ defined( 'ABSPATH' ) || exit;
 										<div class="col-2 align-self-center"><span class="price-compare__content"><?php _e('Finley', 'product'); ?></span></div>
 										<div class="col-2 align-self-center">
 											<span class="price-compare__content">
-												<?php global $product; 
+												<?php $product = new WC_Product_Variable(get_the_ID()); 
 										  		echo '$' . $product->get_price(); ?>
 										  	</span>
 										</div>
 										<div class="col-8">
 											<div class="progress price-compare__bar">
 												<?php 
-												global $product;
+												$product = new WC_Product_Variable(get_the_ID());
 												$finley_price = floatval( preg_replace( '#[^\d.]#', '', $product->get_price_excluding_tax(1,$product->get_price()) ));
 												$retail_price = get_field( 'retail_price' );
 												$percentage = ($finley_price / $retail_price) * 100;

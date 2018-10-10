@@ -198,13 +198,13 @@ if ( $bundled_items ) {
                         
                         <div class="variations">
                             <div class="container">
-                                <div class="row">
-                                    <?php $loop = 0;
-                                    foreach ( $b_attributes as $name => $options ) : $loop++; ?>
-                                        <div class="col label">
+                                <?php $loop = 0;
+                                foreach ( $b_attributes as $name => $options ) : $loop++; ?>
+                                    <div class="row">
+                                        <div class="col-4 label">
                                             <label for="<?php echo sanitize_title( $name ); ?>"><?php echo wc_attribute_label( $name ); ?></label>
                                         </div>
-                                        <div class="col value">
+                                        <div class="col-8 value">
                                             <select data-type="select" class="yith-wcpb-select-for-variables"
                                                     id="<?php echo esc_attr( sanitize_title( $name ) ) . '_' . $bundled_item_id;; ?>"
                                                     name="yith_bundle_attribute_<?php echo sanitize_title( $name ) . '_' . $bundled_item_id; ?>"
@@ -254,8 +254,8 @@ if ( $bundled_items ) {
                                             // }
                                             ?>
                                         </div>
-                                    <?php endforeach; ?>
-                                </div>
+                                    </div>
+                                <?php endforeach; ?>
                             </div>
                         </div>
 

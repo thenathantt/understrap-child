@@ -252,6 +252,13 @@ $container = get_theme_mod( 'understrap_container_type' );
 															</div> <!-- .col -->
 														<?php endwhile; ?>
 													</div> <!-- .row -->
+													<?php if ( get_sub_field('shop_all_button') ) : ?>
+														<div class="row no-gutters">
+															<div class="col col--shop-all-btn">
+																<a href="/shop" class="btn btn-block btn-primary">Shop All</a>
+															</div>
+														</div>
+													<?php endif; ?>
 												</div> <!-- .container -->
 											</div> <!-- .fj-megamenu -->
 										<?php endif;?>
