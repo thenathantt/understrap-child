@@ -105,6 +105,7 @@ function my_account_contents_shortcode() {
 /**
 * SHOP LOOP / GENERAL
 *
+* Set default WOOF data
 * Add wrappers conditional classes for breadcrumbs
 * Add metal type toggle
 * Add custom sidebar to WooCommerce Product Archives
@@ -118,6 +119,11 @@ function my_account_contents_shortcode() {
 * Remove variation information from product name
 * Display currency after price
 * Change number of related products output
+* Change Add to Cart text
+*/
+
+/**
+* Set default WOOF data
 */
 
 add_filter('woof_get_request_data', 'my_woof_get_request_data');
@@ -186,7 +192,7 @@ remove_action( 'woocommerce_before_shop_loop', 'woocommerce_result_count', 20 );
  */
 add_filter('loop_shop_columns', 'fj_loop_columns');
 function fj_loop_columns() {
-	return 4;
+	return 3;
 }
 
 /**
@@ -211,7 +217,7 @@ function fj_divider(){
 }
 
 /**
-* Move product_link_close to after product thumbnail so YITH swatches to not redirect to single product page
+* Move product_link_close to after product thumbnail so YITH swatches do not redirect to single product page
 */
 
 add_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_template_loop_product_link_close', 20 );
@@ -226,18 +232,32 @@ add_action( 'woocommerce_after_shop_loop_item_title', 'woocommerce_template_loop
 * Move add to cart to below product thumnail, this also moves YITH swatches
 */
 
-remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart', 10 );
-add_action( 'woocommerce_shop_loop_item_title', 'woocommerce_template_loop_add_to_cart', 1 );
+// remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart', 10 );
+// add_action( 'woocommerce_shop_loop_item_title', 'woocommerce_template_loop_add_to_cart', 1 );
+
+/**
+* Add wrapper around Metal Type and Price
+*/
+
+add_action('woocommerce_after_shop_loop_item_title', 'fj_loop_price_metal_wrapper_open', 5);
+function fj_loop_price_metal_wrapper_open() {
+	echo '<div class="fj-woocommerce-loop-product__metal-price d-flex flex-wrap justify-content-between align-items-center">';
+}
+
+add_action('woocommerce_after_shop_loop_item_title', 'fj_loop_price_metal_wrapper_close', 15);
+function fj_loop_price_metal_wrapper_close() {
+	echo '</div>';
+}
 
 /**
 * Add metal type to the loop and single product
 */
 
-add_action('woocommerce_after_shop_loop_item_title', 'fj_template_loop_product_title', 1);
-function fj_template_loop_product_title() {
+add_action('woocommerce_after_shop_loop_item_title', 'fj_product_loop_metal_type', 9);
+function fj_product_loop_metal_type() {
   global $product;
   $metal_type = $product->get_attribute('pa_metal-type');
-  echo '<p class="fj-woocommerce-loop-product__custom-attribute">' . $metal_type . '</p>';
+  echo '<span class="fj-woocommerce-loop-product__custom-attribute">' . $metal_type . '</span>';
 }
 
 add_action('woocommerce_single_product_summary', 'fj_single_product_metal_type', 6);
@@ -288,6 +308,16 @@ add_filter( 'woocommerce_output_related_products_args', 'fj_related_products_arg
 	$args['posts_per_page'] = 3; // 4 related products
 	$args['columns'] = 3; // arranged in 2 columns
 	return $args;
+}
+
+/**
+ * Change add to cart text on archives depending on product type
+ */ 
+
+add_filter( 'woocommerce_product_add_to_cart_text', 'fj_archive_add_to_cart_text' );
+
+function fj_archive_add_to_cart_text() {
+  return __( 'See Details', 'finley' );
 }
 
 /**

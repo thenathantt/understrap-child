@@ -43,11 +43,12 @@ if ( $fj_products ) {
 } elseif ( $product_per_row != 5 || $fj_slick_products) {
 	$num_of_col = 12/$product_per_row;
 	$columns = 'col-lg-' . esc_attr($num_of_col);
-	$class = 'col-6 col-md-6 ' . $columns;
+	$class = 'col-12 col-md-6 ' . $columns;
 } 
 
 ?>
 <li <?php wc_product_class($class); ?>>
+	<div class="fj-product-card">
 	<?php
 	/**
 	 * Hook: woocommerce_before_shop_loop_item.
@@ -87,4 +88,5 @@ if ( $fj_products ) {
 	 */
 	do_action( 'woocommerce_after_shop_loop_item' );
 	?>
+	</div>
 </li>

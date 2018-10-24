@@ -2,11 +2,15 @@
 //
 // Custom Select2 Styles
 
+.select2-dropdown {
+	border: 1px solid $gray-600;
+}
+
 .select2-container {
 
 	.select2-selection {
 
-		border-radius: 0!important;
+		border-radius: 0;
 
 	}
 
@@ -27,7 +31,8 @@
 
 	  .select2-selection__arrow {
 	  	top: 0;
-	  	height: calc(2em - 2px);
+	  	right: 3px;
+	  	height: 2em;
 	  }
 	}
 }
@@ -56,13 +61,47 @@
 }
 
 //
-// Single Product Variation Form
+// Variable product variations form
 //
 
 .variations {
-	.select2 { font-size: 0.9rem; }
+	.select2-container--default { 
+		font-size: var(--font-down-1); 
+
+		&.select2-container--open {
+			&.select2-container--below, &.select2-container--above {
+				.select2-selection--single, .select2-selection-multiple {
+					border-radius: 2em;
+				}
+			}
+
+			.select2-dropdown {
+				margin-top: 0.25em;
+			}
+
+			.select2-dropdown--below, .select2-dropdown--above {
+				border: 1px solid $gray-600;
+				border-radius: 1rem;
+			}
+		}
+
+		.select2-selection--single {
+			border: 1px solid $gray-600;
+			border-radius: 2em;
+		}
+	}
 }
 
 ul.select2-results__options[id*="pa"] {
-	font-size: 0.9rem;
+	font-size: var(--font-down-1);
+}
+
+//
+// Currency Switcher (Footer)
+//
+
+#wrapper-footer-full {
+	.currency_switch_form {
+		background: white;
+	}
 }

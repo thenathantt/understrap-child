@@ -94,11 +94,25 @@ jQuery(document).ready(function($) {
     }
   }
 
-  $('.fj-offcanvas-toggle').on('click', function(){
-    var toggleClass = $(this).attr('data-toggle');
-    var targetClass = $(this).attr('data-target');
+  $(document).on('click', '.added_to_cart', function(event){
+    event.preventDefault();
+    $('.fj-offcanvas-toggle').trigger( 'click', { toggleClass : 'hide', targetClass : '.fj-offcanvas-wrapper--mini-cart' } );
+  });
+
+  $('.fj-offcanvas-toggle').on('click', function(event, classData){
+    var toggleClass = '';
+    var targetClass = '';
     var overlay = $('.fj-offcanvas-overlay');
-    var offcanvasWrapper = $(targetClass);
+
+    if ( !classData ) {
+      toggleClass = $(this).attr('data-toggle'); 
+      targetClass = $(this).attr('data-target');
+    } else {
+      toggleClass = classData.toggleClass;
+      targetClass = classData.targetClass;
+    }
+
+    var offcanvasWrapper = $(targetClass)
 
     if ( offcanvasWrapper.hasClass('hide') && $('body').hasClass('noscroll') && overlay.hasClass('fj-offcanvas-overlay--visible') ) {
       offcanvasWrapper.toggleClass(toggleClass);
@@ -185,7 +199,35 @@ jQuery(document).ready(function($) {
   });
 
   // pre-select size 3 to activate YTIH swatches in loop
-  $('li.product [id=pa_ring-size]').find('option:nth-child(2)').prop('selected',true).trigger('change'); //trigger a change instead of click
+  // $('li.product [id=pa_ring-size]').find('option:nth-child(2)').prop('selected',true).trigger('change'); //trigger a change instead of click
+
+  // Found Variation
+
+  var form = $('.variations_form');
+
+  form.on('check_variations', function ( event, variation ) {
+    $(event.target).closest('.fj-product-card').css('padding-bottom', '0.75rem');
+
+    $(event.target)
+      .closest('.fj-product-card')
+      .find('.add-to-cart-container')
+      .css({
+        'visibility' : 'hidden',
+        'opacity' : '0'
+      });
+  });
+
+  form.on('found_variation.first', function ( event, variation ) {
+    $(event.target).closest('.fj-product-card').css('padding-bottom', '1.75rem');
+
+    $(event.target)
+      .closest('.fj-product-card')
+      .find('.add-to-cart-container')
+      .css({
+        'visibility' : 'visible',
+        'opacity' : '1'
+      });
+  });
 
   //
   // Select2
@@ -244,7 +286,6 @@ jQuery(document).ready(function($) {
   });
 
   slickSlider = $('.fj-slick-products').slick({
-    // dots: true,
     mobileFirst : true,
     lazyLoad: 'progressive',
     infinite: false,

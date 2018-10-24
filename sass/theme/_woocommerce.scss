@@ -81,6 +81,41 @@
 
   }
 
+  .fj-product-card { 
+    box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.15); 
+    padding-bottom: 0.75rem;
+    margin-bottom: 2rem;
+    position: relative;
+
+    .add-to-cart-container {
+      position: absolute;
+      width: 100%;
+      bottom: -0.9rem;
+      opacity: 0;
+      transition: all 0.5s;
+      visibility: hidden;
+
+      .add_to_cart_button {
+        @extend .btn-primary;
+        @extend .fj-btn-pill;
+        font-size: var(--font-down-1);
+        font-weight: 300;
+      }
+
+      .added_to_cart { 
+        @extend .btn;
+        @extend .btn-outline-secondary;
+        @extend .fj-btn-pill;
+        padding: .618em 1em;
+        line-height: 1;
+        background: #fff;
+        display: inline-block; 
+        font-size: var(--font-down-1);
+        font-weight: 300;
+      }
+    }
+  }
+
   .woocommerce-ordering { margin: 0!important; }
 
   .products {
@@ -91,42 +126,51 @@
       margin-bottom: 1rem;
       list-style: none;
 
+      .woocommerce-loop-product__link {
+        display: inline-block;
+        width: 100%;
+        text-align: left;
+      }
+
       .woocommerce-loop-product__title {
         
         font-size: var(--font-down-1);
-        margin-top: 0.5em;
+        margin-top: 1.25em;
+        padding-left: 1rem;
+        padding-right: 1rem;
     
       }
 
-      .woocommerce-Price-amount { font-size: var(--font-down-1); }
+      .woocommerce-Price-amount { 
+        font-size: var(--font-down-1); 
+        margin-right: 1rem;
+        font-weight: 400;
+      }
 
       .fj-woocommerce-loop-product__custom-attribute {
 
         font-size: var(--font-down-1);
         margin-bottom: 0;
+        margin-left: 1rem;
+        line-height: 1;
 
       }
 
-      .in_loop {
+      // .in_loop {
 
-        .variations.pa_ring-size { display: none; }
+      //   .variations.pa_ring-size { display: none; }
 
-      }
+      // }
 
-      p.stock { display: none; }
+      // p.stock { display: none; }
 
       a {
 
-        img {
-
-          background-color: $pink-light;
-          margin-bottom: 0;
-
-        }
+        img { margin-bottom: 0; }
 
       }
 
-      .add-to-cart-container { display: none; }
+      // .add-to-cart-container { display: none; }
 
     }
 
@@ -220,8 +264,12 @@
               margin-bottom: 0; 
               line-height: 2em;
               font-weight: 400;
-              font-size: 0.9rem;
+              font-size: 0.9em;
             }
+          }
+
+          @include media-breakpoint-up(md) {
+            .label { width: 100%; text-align: center;}
           }
         }
       }
@@ -259,6 +307,9 @@
       float: none!important;
       clear: none;
 
+      @include media-breakpoint-up(md) {
+        width: 80%!important;
+      }
     }
 
   }

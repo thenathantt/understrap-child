@@ -34,7 +34,7 @@ do_action( 'woocommerce_before_add_to_cart_form' ); ?>
 				<div class="row no-gutters">
 					<?php foreach ( $attributes as $attribute_name => $options ) : ?>
 						<div class="col-12 col-md-6 mb-3">
-							<div class="d-flex justify-content-between px-md-2">
+							<div class="d-flex d-md-block justify-content-between px-md-3">
 								<div class="label">
 									<label for="<?php echo esc_attr( sanitize_title( $attribute_name ) ); ?>"><?php echo wc_attribute_label( $attribute_name ); // WPCS: XSS ok. ?></label>
 								</div>
